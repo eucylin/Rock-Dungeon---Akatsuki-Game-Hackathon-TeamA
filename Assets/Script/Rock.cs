@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Rock : MonoBehaviour {
 	public bool isPushing = false, isPulling = false;
+	public float offset = 0.5f, speedCoef;
 	int dirX, dirZ, targetX, targetZ, forceCoef;
 
 	// Update is called once per frame
@@ -16,8 +17,8 @@ public class Rock : MonoBehaviour {
 	}
 
 	public void Push(float playerX, float playerZ, int force = 1){
-		int pX = Mathf.FloorToInt(playerX), pZ = Mathf.FloorToInt(playerZ),
-		rX = Mathf.FloorToInt(transform.position.x), rZ = Mathf.FloorToInt(transform.position.z);
+		int pX = Mathf.FloorToInt(playerX + offset), pZ = Mathf.FloorToInt(playerZ + offset),
+		rX = Mathf.FloorToInt(transform.position.x + offset), rZ = Mathf.FloorToInt(transform.position.z + offset);
 
 		dirX = rX - pX;
 		dirZ = rZ - pZ;
@@ -27,6 +28,7 @@ public class Rock : MonoBehaviour {
 			forceCoef = force;
 			isPushing = true;
 		}
+		DebugLogger.Log("Pushing rock! " + "px = " + pX + ", pz = " + pZ + ", targetX = " + targetX + ", targetZ = " + targetZ);
 	}
 
 	public void Pull(){
@@ -34,11 +36,14 @@ public class Rock : MonoBehaviour {
 	}
 
 	void PushMove(){
-		if(Mathf.FloorToInt(transform.position.x) != targetX){
-			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, targetX, Time.deltaTime * forceCoef), transform.position.y, transform.position.z);
+		if(Mathf.Abs(transform.position.x - targetX) > Mathf.Epsilon){
+			transform.position = new Vector3(Mathf.MoveTowards(transform.position.x, targetX, Time.deltaTime * forceCoef * speedCoef), transform.position.y, transform.position.z);
 		}
-		else if(Mathf.FloorToInt(transform.position.z) != targetZ){
-			transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.MoveTowards(transform.position.z, targetZ, Time.deltaTime * forceCoef));
+		else if(Mathf.Abs(transform.position.z - targetZ) > Mathf.Epsilon){
+			transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.MoveTowards(transform.position.z, targetZ, Time.deltaTime * forceCoef * speedCoef));
+		}
+		else{
+			isPushing = false;
 		}
 	}
 
