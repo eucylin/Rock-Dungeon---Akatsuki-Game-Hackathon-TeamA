@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour {
 		direction [3,1] = -1;
 
 		//set TargetPosition
-		targetPosition = new Vector3 (3.0f, 0, 3.0f);
+		targetPosition = new Vector3 (4.0f, 0, 1.0f);
 		gridPosition = gameObject.transform.position;
 		gridPosition.y = 0;
 		//initialize
