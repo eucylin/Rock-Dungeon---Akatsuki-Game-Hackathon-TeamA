@@ -50,9 +50,13 @@ namespace UnityChan
 		static int locoState = Animator.StringToHash ("Base Layer.Locomotion");
 		static int jumpState = Animator.StringToHash ("Base Layer.Jump");
 		static int restState = Animator.StringToHash ("Base Layer.Rest");
+        static int walkBackState = Animator.StringToHash("Base Layer.WalkBack");
+        static int empowerState = Animator.StringToHash("Base Layer.Empower");
+        static int attackState = Animator.StringToHash("Base Layer.Attack");
+        static int damagedState = Animator.StringToHash("Base Layer.Damaged");
 
-		// 初期化
-		void Start ()
+        // 初期化
+        void Start ()
 		{
 			// Animatorコンポーネントを取得する
 			anim = GetComponent<Animator> ();
@@ -81,40 +85,47 @@ namespace UnityChan
 			anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
 			currentBaseState = anim.GetCurrentAnimatorStateInfo (0);	// 参照用のステート変数にBase Layer (0)の現在のステートを設定する
 			rb.useGravity = true;//ジャンプ中に重力を切るので、それ以外は重力の影響を受けるようにする
-		
-		
-		
-			// 以下、キャラクターの移動処理
-			velocity = new Vector3 (0, 0, v);		// 上下のキー入力からZ軸方向の移動量を取得
-			// キャラクターのローカル空間での方向に変換
-			velocity = transform.TransformDirection (velocity);
-			//以下のvの閾値は、Mecanim側のトランジションと一緒に調整する
-			if (v > 0.1) {
-				velocity *= forwardSpeed;		// 移動速度を掛ける
-			} else if (v < -0.1) {
-				velocity *= backwardSpeed;	// 移動速度を掛ける
-			}
-		
-			if (Input.GetButtonDown ("Jump")) {	// スペースキーを入力したら
 
-				//アニメーションのステートがLocomotionの最中のみジャンプできる
-				if (currentBaseState.nameHash == locoState) {
-					//ステート遷移中でなかったらジャンプできる
-					if (!anim.IsInTransition (0)) {
-						rb.AddForce (Vector3.up * jumpPower, ForceMode.VelocityChange);
-						anim.SetBool ("Jump", true);		// Animatorにジャンプに切り替えるフラグを送る
-					}
-				}
-			}
-		
 
-			// 上下のキー入力でキャラクターを移動させる
-			transform.localPosition += velocity * Time.fixedDeltaTime;
+            if (currentBaseState.nameHash == idleState || currentBaseState.nameHash == locoState || currentBaseState.nameHash == jumpState || currentBaseState.nameHash == walkBackState || currentBaseState.nameHash == restState)
+            {
+                // 以下、キャラクターの移動処理
+                velocity = new Vector3(0, 0, v);        // 上下のキー入力からZ軸方向の移動量を取得
+                                                        // キャラクターのローカル空間での方向に変換
+                velocity = transform.TransformDirection(velocity);
+                //以下のvの閾値は、Mecanim側のトランジションと一緒に調整する
+                if (v > 0.1)
+                {
+                    velocity *= forwardSpeed;       // 移動速度を掛ける
+                }
+                else if (v < -0.1)
+                {
+                    velocity *= backwardSpeed;  // 移動速度を掛ける
+                }
 
-			// 左右のキー入力でキャラクタをY軸で旋回させる
-			transform.Rotate (0, h * rotateSpeed, 0);	
-	
+                if (Input.GetButtonDown("Jump"))
+                {   // スペースキーを入力したら
 
+                    //アニメーションのステートがLocomotionの最中のみジャンプできる
+                    if (currentBaseState.nameHash == locoState)
+                    {
+                        //ステート遷移中でなかったらジャンプできる
+                        if (!anim.IsInTransition(0))
+                        {
+                            rb.AddForce(Vector3.up * jumpPower, ForceMode.VelocityChange);
+                            anim.SetBool("Jump", true);     // Animatorにジャンプに切り替えるフラグを送る
+                        }
+                    }
+                }
+
+
+                // 上下のキー入力でキャラクターを移動させる
+                transform.localPosition += velocity * Time.fixedDeltaTime;
+
+                // 左右のキー入力でキャラクタをY軸で旋回させる
+                transform.Rotate(0, h * rotateSpeed, 0);
+
+            }
 			// 以下、Animatorの各ステート中での処理
 			// Locomotion中
 			// 現在のベースレイヤーがlocoStateの時
@@ -219,5 +230,11 @@ namespace UnityChan
             anim.SetBool("Empower", value);
         }
 
-	}
+        void OnCollisionEnter(Collision collision)
+        {
+            if (collision.transform.tag == "Enemy")
+                anim.SetTrigger("Damage");
+        }
+
+    }
 }
