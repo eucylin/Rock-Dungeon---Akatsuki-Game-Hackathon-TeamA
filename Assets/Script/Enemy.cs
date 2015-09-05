@@ -8,17 +8,28 @@ public class Enemy : MonoBehaviour {
 	//enemy's speed
 	public float speed;
 
-	public Vector3 faceDirection;
 	//check enemy's health
 	public float enemyHealth;
 
 	//check player in sight or not
 	public bool playerInSight;
-	public Vector3 targetPosition;
+
 	public bool[,] visitedGrid;
 	public int [,] direction;
 	public int [,] searchDirection;
 	public int [,] searchQueue;
+
+	public Vector3 targetPosition;
+	//temp move position
+	public Vector3 tempPosition;
+
+	public Vector3 gridPosition;
+	public Vector3 playerPosition;
+	public Vector3 faceDirection;
+
+
+
+
 	// Use this for initialization
 	void Start () {
 		speed = 1.0f;
@@ -41,6 +52,13 @@ public class Enemy : MonoBehaviour {
 
 		direction [3,0] = 0;
 		direction [3,1] = -1;
+
+		//set TargetPosition
+		targetPosition = new Vector3 (3.0f, 0, 3.0f);
+		gridPosition = gameObject.transform.position;
+		gridPosition.y = 0;
+		//initialize
+		//tempPosition = targetPosition;
 
 	}
 	
@@ -71,10 +89,32 @@ public class Enemy : MonoBehaviour {
 	//巡邏
 	void Patrol()
 	{
-		//walk to target position
-		findTarget ();
+		Vector3 diffFromTarget = targetPosition - gridPosition;
+		diffFromTarget.y = 0;
+		if (diffFromTarget.magnitude <= 0.01) {
+			return;
+		} 
+
+
+
+
+		Vector3 diffTemp = tempPosition - gameObject.transform.position;
+		diffTemp.y = 0;
+		if (diffTemp.magnitude <= 0.01) {
+
+			findTarget();
+			gridPosition = tempPosition;
+			//DebugLogger.Log ("NO");
+
+		}
+		//findTarget();
+		//DebugLogger.Log (tempPosition);
 		WalkGrid ();
-		DebugLogger.Log ("Patrol");
+
+		//walk to target position
+		//findTarget ();
+
+		//DebugLogger.Log ("Patrol");
 
 	}
 	//Walk one Grid
@@ -89,13 +129,17 @@ public class Enemy : MonoBehaviour {
 	void findTarget()
 	{
 		//Target
-		int targetX = 3;
-		int targetZ = 3;
+		int targetX = (int)targetPosition.x;
+		int targetZ = (int)targetPosition.z;
 
 		//Enemy X,Z
-		int sourceX=0;
-		int sourceZ=0;
+		int sourceX=(int)gridPosition.x;
+		int sourceZ=(int)gridPosition.z;
 
+		//DebugLogger.Log (sourceX);
+		//DebugLogger.Log (sourceZ);
+		//DebugLogger.Log (targetX);
+		//DebugLogger.Log (targetZ);
 
 		for (int i = 0; i<6; i++)
 			for (int j = 0; j<6; j++) {
@@ -123,11 +167,11 @@ public class Enemy : MonoBehaviour {
 					searchQueue[qe,0] = moveX;
 					searchQueue[qe,1] = moveZ;
 					qe++;
-					if(moveX==targetX&&moveZ==targetZ)
-					{
-						qf = qe+1;
-						break;
-					}
+					//if(moveX==targetX&&moveZ==targetZ)
+					//{
+						//qf = qe+1;
+						//break;
+					//}
 				}
 
 			}
@@ -147,13 +191,15 @@ public class Enemy : MonoBehaviour {
 			TempX+=direction[index,0];
 	
 			TempZ+=direction[index,1];
-			dirIndex = (index+2)%2;
+			dirIndex = (index+2)%4;
 
 		}
 
-		Vector3 tempPosition = new Vector3 ((float)direction [dirIndex,0], 0, (float)direction [dirIndex,1]);
-		faceDirection = tempPosition - gameObject.transform.position;
+		tempPosition = gridPosition + new Vector3 ((float)direction [dirIndex,0], 0, (float)direction [dirIndex,1]);
+		faceDirection = new Vector3 ((float)direction [dirIndex, 0], 0, (float)direction [dirIndex, 1]);
 		faceDirection.y = 0;
+		//DebugLogger.Log (tempPosition);
+		//DebugLogger.Log (faceDirection);
 	}
 
 	void OnTriggerStay (Collider other) {
