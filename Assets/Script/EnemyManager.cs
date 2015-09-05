@@ -2,7 +2,7 @@
 using System.Collections;
 public class EnemyManager : MonoBehaviour
 {
-
+	 
 	public GameObject enemy;                // The enemy prefab to be spawned.
 	public float spawnTime = 3.0f;            // How long between each spawn.
 	//public Transform[] spawnPoints;         // An array of the spawn points this enemy can spawn from.
@@ -17,6 +17,7 @@ public class EnemyManager : MonoBehaviour
 		for (int i = 0; i<blocked.Length; i++)
 			blocked [i] = false;
 		//Spawn();
+
 		// Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
 		//InvokeRepeating ("Spawn", spawnTime, spawnTime);
 	}
@@ -34,5 +35,6 @@ public class EnemyManager : MonoBehaviour
 	{
 		// Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
 		Instantiate (enemy, new Vector3(0,1.0f,0), Quaternion.identity);
+
 	}
 }

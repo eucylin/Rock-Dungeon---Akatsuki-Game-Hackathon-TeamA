@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c23442a3029064081b82ce56edf78b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 170842, guid: 0beab31c887e11843ae70b69cc86f0ce, type: 2}
+  enemy: {fileID: 181628, guid: 0beab31c887e11843ae70b69cc86f0ce, type: 2}
   spawnTime: 3
   blocked: 
   spawnPoints: []
@@ -50,7 +50,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 181628, guid: 0beab31c887e11843ae70b69cc86f0ce, type: 2}
+    - target: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 158704, guid: 544b7250b4c8be745bccffe8b646c9f2, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 164406}
