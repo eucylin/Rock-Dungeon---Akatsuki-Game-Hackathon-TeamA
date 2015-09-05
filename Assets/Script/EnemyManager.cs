@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour
 		currentTime = 2.0f;
 		for (int i = 0; i<blocked.Length; i++)
 			blocked [i] = false;
-		Spawn();
+		//Spawn();
 		// Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
 		//InvokeRepeating ("Spawn", spawnTime, spawnTime);
 	}
@@ -26,13 +26,13 @@ public class EnemyManager : MonoBehaviour
 		currentTime += Time.deltaTime;
 		if (currentTime >= spawnTime) {
 			currentTime = 0.0f;
-			//Spawn();
+			Spawn();
 
 		}
 	}
 	void Spawn ()
 	{
 		// Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
-		Instantiate (enemy, new Vector3(0,2,0), Quaternion.identity);
+		Instantiate (enemy, new Vector3(0,1.0f,0), Quaternion.identity);
 	}
 }
