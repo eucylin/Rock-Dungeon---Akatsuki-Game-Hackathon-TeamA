@@ -89,9 +89,12 @@ public class Enemy : MonoBehaviour {
 	//巡邏
 	void Patrol()
 	{
-		Vector3 diffFromTarget = targetPosition - gridPosition;
+		Vector3 diffFromTarget = targetPosition - gameObject.transform.position;
 		diffFromTarget.y = 0;
-		if (diffFromTarget.magnitude <= 0.01) {
+		if (diffFromTarget.magnitude <= 0.1) {
+			DebugLogger.Log (targetPosition);
+			DebugLogger.Log (gridPosition);
+			DebugLogger.Log (diffFromTarget);
 			return;
 		} 
 
@@ -100,7 +103,7 @@ public class Enemy : MonoBehaviour {
 
 		Vector3 diffTemp = tempPosition - gameObject.transform.position;
 		diffTemp.y = 0;
-		if (diffTemp.magnitude <= 0.01) {
+		if (diffTemp.magnitude <= 0.1) {
 
 			findTarget();
 			gridPosition = tempPosition;
