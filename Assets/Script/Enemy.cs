@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		DebugLogger.Log ("Update");
 		//update obstacles position
 		UpdateObstacles ();
 
@@ -100,7 +101,7 @@ public class Enemy : MonoBehaviour {
 			int Z = (int)boxPosition[i].z;
 			obstacles[X,Z] = 1;
 		}
-		obstacles [2, 1] = 1;
+
 	}
 
 	//Attack
@@ -110,19 +111,20 @@ public class Enemy : MonoBehaviour {
 		//playerPosition = player.transform.position;
 		Vector3 diffFromTarget = playerPosition - gameObject.transform.position;
 		diffFromTarget.y = 0;
-		if (diffFromTarget.magnitude <= 0.1) {
+		if (diffFromTarget.magnitude <= 0.3) {
 
 			return;
 		} 
 		Vector3 diffTemp = tempPosition - gameObject.transform.position;
 		diffTemp.y = 0;
-		if (diffTemp.magnitude <= 0.1) {
+		if (diffTemp.magnitude <= 0.3) {
 			
 			findTarget(playerPosition.x,playerPosition.z);
 			gridPosition = tempPosition;
 			//DebugLogger.Log ("NO");
 			
 		}
+		WalkGrid ();
 
 	}
 
@@ -131,7 +133,7 @@ public class Enemy : MonoBehaviour {
 	{
 		Vector3 diffFromTarget = targetPosition - gameObject.transform.position;
 		diffFromTarget.y = 0;
-		if (diffFromTarget.magnitude <= 0.1) {
+		if (diffFromTarget.magnitude <= 0.3) {
 			DebugLogger.Log (targetPosition);
 			DebugLogger.Log (gridPosition);
 			DebugLogger.Log (diffFromTarget);
@@ -143,7 +145,7 @@ public class Enemy : MonoBehaviour {
 
 		Vector3 diffTemp = tempPosition - gameObject.transform.position;
 		diffTemp.y = 0;
-		if (diffTemp.magnitude <= 0.1) {
+		if (diffTemp.magnitude <= 0.3) {
 
 			findTarget(targetPosition.x,targetPosition.z);
 			gridPosition = tempPosition;
@@ -244,6 +246,7 @@ public class Enemy : MonoBehaviour {
 		tempPosition = gridPosition + new Vector3 ((float)direction [dirIndex,0], 0, (float)direction [dirIndex,1]);
 		faceDirection = new Vector3 ((float)direction [dirIndex, 0], 0, (float)direction [dirIndex, 1]);
 		faceDirection.y = 0;
+		gameObject.transform.LookAt (tempPosition);
 		//DebugLogger.Log (tempPosition);
 		//DebugLogger.Log (faceDirection);
 	}
@@ -254,6 +257,7 @@ public class Enemy : MonoBehaviour {
 			playerInSight = true;
 			playerPosition = other.gameObject.transform.position;
 			DebugLogger.Log("SeeStay!!");
+			DebugLogger.Log(playerPosition);
 		}
 			
 	}
