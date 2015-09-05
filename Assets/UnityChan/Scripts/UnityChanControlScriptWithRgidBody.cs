@@ -213,5 +213,11 @@ namespace UnityChan
         {
             h = v = 0;
         }
+
+        public void SetEmpower(bool value)
+        {
+            anim.SetBool("Empower", value);
+        }
+
 	}
 }
