@@ -26,7 +26,7 @@ public class Grid : MonoBehaviour {
 					nodes[i, j].indexZ = j;
 				}
 			}
-			DebugLogger.Log("Grid : A " + sizeX + "x" + sizeZ +" grid is created.");
+			DebugLogger.Log("Grid : A " + sizeX + "x" + sizeZ + " grid is created.");
 			return true;
 		}
 		else{
