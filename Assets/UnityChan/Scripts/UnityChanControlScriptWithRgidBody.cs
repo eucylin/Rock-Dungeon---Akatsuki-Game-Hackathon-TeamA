@@ -266,7 +266,14 @@ namespace UnityChan
                 Instantiate(hitFire, transform.position, Quaternion.identity);
                 if (isTouchingRock)
                 {
-                    nowTouchedrock.Push(transform.position.x, transform.position.z);
+                    if(flag3)
+                        nowTouchedrock.Push(transform.position.x, transform.position.z, 4);
+                    else if(flag2)
+                        nowTouchedrock.Push(transform.position.x, transform.position.z, 3);
+                    else if (flag1)
+                        nowTouchedrock.Push(transform.position.x, transform.position.z, 2);
+                    else
+                        nowTouchedrock.Push(transform.position.x, transform.position.z);
                 }
             }
         }
@@ -287,7 +294,7 @@ namespace UnityChan
             if (collision.transform.tag == "Enemy" && !hpIsLocked)
             {
                 anim.SetTrigger("Damage");
-                hp -= 3;
+                hp -= 1;
                 hpBar.Value = (float)hp / maxHP;
                 if(hp <= 0 )
                 {
