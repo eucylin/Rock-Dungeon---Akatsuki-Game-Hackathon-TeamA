@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
 	public bool playerInSight;
 	public bool isDied;
 
+	public float interval;
 	public int sizeX;
 	public int sizeZ;
 	public bool[,] visitedGrid;
@@ -41,6 +42,7 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		speed = 3.0f;
 		enemyHealth = 10.0f;
 		damageTime = 0.0f;
@@ -48,6 +50,7 @@ public class Enemy : MonoBehaviour {
 		isDied = false;
 		direction = new int[4, 2];
 
+		interval = 1;
 		sizeX = 6;
 		sizeZ = 6;
 		visitedGrid = new bool[sizeX, sizeZ];
@@ -70,7 +73,7 @@ public class Enemy : MonoBehaviour {
 		direction [3,1] = -1;
 
 		//set random TargetPosition
-		targetPosition = new Vector3 (4.0f, 0, 1.0f);
+		targetPosition = new Vector3 (3.0f, 0, 3.0f);
 		gridPosition = gameObject.transform.position;
 		gridPosition.y = 0;
 		//initialize
@@ -101,6 +104,7 @@ public class Enemy : MonoBehaviour {
 
 		if (isDied==true) {
 			//do Die thing
+			Destroy(gameObject);
 		}
 
 	}
@@ -228,12 +232,12 @@ public class Enemy : MonoBehaviour {
 	void findTarget(float x,float z)
 	{
 		//Target
-		int targetX = (int)x;
-		int targetZ = (int)z;
+		int targetX = (int)Mathf.RoundToInt(x);
+		int targetZ = (int)Mathf.RoundToInt(z);
 
 		//Enemy X,Z
-		int sourceX=(int)gridPosition.x;
-		int sourceZ=(int)gridPosition.z;
+		int sourceX=(int)Mathf.RoundToInt(gridPosition.x);
+		int sourceZ=(int)Mathf.RoundToInt(gridPosition.z);
 
 		//DebugLogger.Log (sourceX);
 		//DebugLogger.Log (sourceZ);

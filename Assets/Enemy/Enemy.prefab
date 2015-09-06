@@ -31,7 +31,7 @@ GameObject:
   - 54: {fileID: 5422138}
   m_Layer: 8
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,7 +122,10 @@ MonoBehaviour:
   gird1: {fileID: 0}
   speed: 0
   enemyHealth: 0
+  damageTime: 0
   playerInSight: 0
+  isDied: 0
+  interval: 0
   sizeX: 0
   sizeZ: 0
   targetPosition: {x: 0, y: 0, z: 0}
@@ -131,6 +134,8 @@ MonoBehaviour:
   playerPosition: {x: 0, y: 0, z: 0}
   faceDirection: {x: 0, y: 0, z: 0}
   boxPosition: []
+  possiblePositions: []
+  sizeOfPositions: 0
 --- !u!135 &13543214
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -197,6 +202,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
