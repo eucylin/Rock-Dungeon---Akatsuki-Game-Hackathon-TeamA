@@ -179,7 +179,8 @@ public class Rock : MonoBehaviour {
 		if(col.gameObject.tag == "Enemy"){
 			if(isPushing){
 				col.gameObject.GetComponent<Enemy>().TakeDamage();
-				col.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(dirX * forceCoef, 0.0f, dirZ * forceCoef), ForceMode.Impulse);
+				col.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(dirX * forceCoef, 0.0f, dirZ * forceCoef * 5f), ForceMode.Impulse);
+				AudioManager.instance.PlaySound(AudioManager.AudioName.EnemyHitByRock);
 			}
 		}
 	}

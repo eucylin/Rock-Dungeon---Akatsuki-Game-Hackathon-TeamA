@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour {
 
 	void GameOver(){
 		gamesState = GameState.GameOver;
+		AudioManager.instance.PlaySound(AudioManager.AudioName.GameOver);
 	}
 }
 

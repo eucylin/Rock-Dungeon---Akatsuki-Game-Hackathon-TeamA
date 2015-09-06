@@ -305,6 +305,7 @@ namespace UnityChan
                 {
                     col.enabled = false;
                     anim.SetTrigger("Dead");
+					EventManager.GameOver();
                 }
             }
         }
