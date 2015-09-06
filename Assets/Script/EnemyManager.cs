@@ -74,7 +74,24 @@ public class EnemyManager : MonoBehaviour
 				Instantiate (enemy, spawnPoints[i], Quaternion.identity);
 			//Instantiate (enemy, new Vector3 (0, 1.0f, 0), Quaternion.identity);
 		}
+
+		CheckGameSuccess();
 	}
+
+	void CheckGameSuccess(){
+		bool isGameSuccessed = true;
+
+		for (int i = 0; i<spawnPoints.Length; i++) {
+			if(blocked[i] == false){
+				isGameSuccessed = false;
+			}
+		}
+
+		if(isGameSuccessed){
+			EventManager.GameSucceed();
+		}
+	}
+
 
 	void updateBoxPosition()
 	{

@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	public GameState gamesState;
 	public int gridSizeX, gridSizeZ;
+	public GameObject levelClearUI;
 
 	public enum GameState{
 		MainMenu,
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour {
 
 	void GameSucceed(){
 		gamesState = GameState.GameSucceed;
+		levelClearUI.SetActive(true);
 	}
 
 	void GameOver(){

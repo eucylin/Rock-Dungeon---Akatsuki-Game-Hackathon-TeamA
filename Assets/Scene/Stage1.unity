@@ -896,7 +896,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1209209272
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1639,6 +1639,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11419204, guid: 3aaadba5c7e5343458d5d2a29e0b5cec, type: 2}
+      propertyPath: levelClearUI
+      value: 
+      objectReference: {fileID: 1209209271}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3aaadba5c7e5343458d5d2a29e0b5cec, type: 2}
   m_IsPrefabParent: 0
