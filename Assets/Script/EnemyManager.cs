@@ -34,7 +34,7 @@ public class EnemyManager : MonoBehaviour
 			Quaternion quate = Quaternion.identity;
 		
 				quate.eulerAngles = new Vector3(90, 0, 0);
-			Instantiate (spawner, new Vector3(spawnPoints [i].x,0.5f,spawnPoints[i].z), quate);
+			Instantiate (spawner, new Vector3(spawnPoints [i].x,0.55f,spawnPoints[i].z), quate);
 		
 		}//Spawn();
 
