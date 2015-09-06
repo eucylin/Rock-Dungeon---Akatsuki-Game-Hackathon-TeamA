@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour {
 	//enemy's speed
 	public float speed;
 
+	public bool falling;
+	public float fallingTime;
+
 	//check enemy's health
 	public float enemyHealth;
 	public float damageTime;
@@ -48,6 +51,9 @@ public class Enemy : MonoBehaviour {
 	public bool firstUsed;
 	// Use this for initialization
 	void Start () {
+		falling = false;
+		fallingTime = 2.0f;
+
 		currentTime = 0.0f;
 		updateTime = 1.0f;
 		firstUsed = true;
@@ -98,6 +104,22 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//掉落
+		if(falling)
+		{
+
+			fallingTime-=Time.deltaTime;
+			faceDirection = new Vector3(0,0,0);
+			if(fallingTime<=0.0)
+			{
+				Destroy(gameObject);
+			}
+		}
+
+
+
+
+
 		animationTime -= Time.deltaTime;
 		if (animationTime <= 0.0f) {
 			animationTime = 0.0f;
@@ -193,6 +215,7 @@ public class Enemy : MonoBehaviour {
 		gridPosition.z = (float)Z;
 		if (X < 0 || X >= sizeX || Z < 0 || Z >= sizeZ) {
 			isDied = true;
+			falling = true;
 			return ;
 		}
 		if (obstacles [X,Z] == 2)
