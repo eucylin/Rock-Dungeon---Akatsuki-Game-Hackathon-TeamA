@@ -4,7 +4,7 @@ public class EnemyManager : MonoBehaviour
 {
 	public GameObject spawner; 
 	public GameObject enemy;                // The enemy prefab to be spawned.
-	public float spawnTime = 3.0f;            // How long between each spawn.
+	public float spawnTime = 5.0f;            // How long between each spawn.
 	//public Transform[] spawnPoints;         // An array of the spawn points this enemy can spawn from.
 	public bool[] blocked;
 	public Vector3[] spawnPoints;  

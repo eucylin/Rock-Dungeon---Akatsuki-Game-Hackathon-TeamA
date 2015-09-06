@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour {
 		updateTime = 1.0f;
 		firstUsed = true;
 
-		speed = 2.0f;
+		speed = 1.0f;
 		enemyHealth = 10.0f;
 		damageTime = 0.0f;
 		playerInSight = false;
