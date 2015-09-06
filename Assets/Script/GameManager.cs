@@ -4,6 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	public GameState gamesState;
+	public int gridSizeX, gridSizeZ;
 
 	public enum GameState{
 		MainMenu,
