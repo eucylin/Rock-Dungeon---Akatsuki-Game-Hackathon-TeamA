@@ -10,9 +10,19 @@ public class EnemyManager : MonoBehaviour
 	public Vector3[] spawnPoints;  
 	public float currentTime;
 
+	public Vector3[] boxPosittions;
+	public int[,] obstacles;
+	public int sizeX;
+	public int sizeZ;
+
+
 
 	void Start ()
 	{
+		sizeX = 6;
+		sizeZ = 6;
+		obstacles = new int[sizeX, sizeZ];
+	
 		currentTime = 2.0f;
 		for (int i = 0; i<blocked.Length; i++)
 			blocked [i] = false;
@@ -27,14 +37,40 @@ public class EnemyManager : MonoBehaviour
 		currentTime += Time.deltaTime;
 		if (currentTime >= spawnTime) {
 			currentTime = 0.0f;
+			updateBoxPosition();
 			Spawn();
 
 		}
 	}
+
+
 	void Spawn ()
 	{
+		for (int i = 0; i<spawnPoints.Length; i++) {
+			int X = (int)spawnPoints[i].x;
+			int Z = (int)spawnPoints[i].z;
+			if(obstacles[X,Z]==1)
+			{
+				blocked[i] = true;
+			}
+		}
 		// Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
 		Instantiate (enemy, new Vector3(0,1.0f,0), Quaternion.identity);
+
+	}
+
+	void updateBoxPosition()
+	{
+		for (int i = 0; i<sizeX; i++)
+			for (int j = 0; j<sizeZ; j++)
+				obstacles [i, j] = 0;
+		for (int i = 0; i<boxPosittions.Length; i++) {
+			int X = (int)boxPosittions[i].x;
+			int Z = (int)boxPosittions[i].z;
+			obstacles[X,Z] = 1;
+
+		}
+
 
 	}
 }

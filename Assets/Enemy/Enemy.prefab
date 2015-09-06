@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 426106}
   - 135: {fileID: 13543214}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,9 +28,10 @@ GameObject:
   - 135: {fileID: 13544402}
   - 23: {fileID: 2392196}
   - 114: {fileID: 11466694}
-  m_Layer: 0
+  - 54: {fileID: 5422138}
+  m_Layer: 8
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,6 +92,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181628}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &5422138
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181628}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &11466694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -106,7 +122,10 @@ MonoBehaviour:
   gird1: {fileID: 0}
   speed: 0
   enemyHealth: 0
+  damageTime: 0
   playerInSight: 0
+  isDied: 0
+  interval: 0
   sizeX: 0
   sizeZ: 0
   targetPosition: {x: 0, y: 0, z: 0}
@@ -115,6 +134,8 @@ MonoBehaviour:
   playerPosition: {x: 0, y: 0, z: 0}
   faceDirection: {x: 0, y: 0, z: 0}
   boxPosition: []
+  possiblePositions: []
+  sizeOfPositions: 0
 --- !u!135 &13543214
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -134,8 +155,8 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181628}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -168,11 +189,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerInSight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
