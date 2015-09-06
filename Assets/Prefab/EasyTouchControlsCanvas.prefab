@@ -1,0 +1,800 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &115584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22430176}
+  - 223: {fileID: 22301798}
+  - 114: {fileID: 11462758}
+  - 114: {fileID: 11413210}
+  m_Layer: 0
+  m_Name: EasyTouchControlsCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &125396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22491850}
+  - 114: {fileID: 11493764}
+  - 225: {fileID: 22506848}
+  - 222: {fileID: 22231080}
+  - 114: {fileID: 11446408}
+  m_Layer: 0
+  m_Name: Left Joystick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &142854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22422708}
+  - 114: {fileID: 11498066}
+  - 222: {fileID: 22270156}
+  - 114: {fileID: 11423434}
+  m_Layer: 0
+  m_Name: Attack Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &152358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22492404}
+  - 114: {fileID: 11488860}
+  - 222: {fileID: 22293792}
+  - 114: {fileID: 11468554}
+  m_Layer: 0
+  m_Name: Pull Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &158368
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22460868}
+  - 222: {fileID: 22276788}
+  - 114: {fileID: 11439128}
+  m_Layer: 0
+  m_Name: Thumb
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &11413210
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &11423434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 4eaa16f80c6e1e34a8ed9e5a5acff92c, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!114 &11439128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 9694c893a7e170642bea620bb617bbf3, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!114 &11446408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 12119edda0df1ea4fa497514f515b340, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!114 &11462758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!114 &11468554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 6cb7910cccca92c4cb26389a45cdb0d5, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!114 &11488860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba60450c5a1202b41869d8ee7136c85f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _anchor: 0
+  _anchorOffet: {x: 0, y: 0}
+  _visible: 1
+  _activated: 1
+  pointId: -1
+  enableKeySimulation: 1
+  allowSimulationStandalone: 0
+  dPadAxisCount: 0
+  useFixedUpdate: 0
+  isOnDrag: 0
+  isSwipeIn: 0
+  isSwipeOut: 0
+  showPSInspector: 1
+  showSpriteInspector: 1
+  showEventInspector: 1
+  showBehaviourInspector: 1
+  showAxesInspector: 0
+  showTouchEventInspector: 0
+  showDownEventInspector: 0
+  showPressEventInspector: 0
+  onDown:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCButton+OnDownHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetPull
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: ETCButton+OnPressedHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onPressedValue:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCButton+OnPressedValueandler, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetPull
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ETCButton+OnUPHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  axis:
+    name: Pull Button
+    enable: 1
+    range: 0
+    invertedAxis: 0
+    speed: 15
+    deadValue: .100000001
+    isEnertia: 0
+    inertia: 0
+    inertiaThreshold: .0799999982
+    isAutoStab: 0
+    autoStabThreshold: .00999999978
+    autoStabSpeed: 10
+    isClampRotation: 0
+    maxAngle: 90
+    minAngle: 90
+    isValueOverTime: 0
+    overTimeStep: 1
+    maxOverTimeValue: 1
+    axisValue: 0
+    axisSpeedValue: 0
+    axisThreshold: .5
+    axisState: 0
+    _directTransform: {fileID: 0}
+    directAction: 0
+    axisInfluenced: 0
+    actionOn: 1
+    directCharacterController: {fileID: 0}
+    directRigidBody: {fileID: 0}
+    gravity: 0
+    positivekey: 32
+    negativeKey: 0
+  normalSprite: {fileID: 21300000, guid: 6cb7910cccca92c4cb26389a45cdb0d5, type: 3}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  pressedSprite: {fileID: 21300008, guid: becfdeef1534456438d787466a94d207, type: 3}
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &11493764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c26c7a0dcd8138d4194e0a4435a4740c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _anchor: 0
+  _anchorOffet: {x: 0, y: 0}
+  _visible: 1
+  _activated: 1
+  pointId: -1
+  enableKeySimulation: 1
+  allowSimulationStandalone: 0
+  dPadAxisCount: 0
+  useFixedUpdate: 0
+  isOnDrag: 0
+  isSwipeIn: 0
+  isSwipeOut: 0
+  showPSInspector: 1
+  showSpriteInspector: 1
+  showEventInspector: 1
+  showBehaviourInspector: 0
+  showAxesInspector: 1
+  showTouchEventInspector: 0
+  showDownEventInspector: 0
+  showPressEventInspector: 0
+  onMoveStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnMoveStartHandler, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onMove:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetAxis
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ETCJoystick+OnMoveHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onMoveSpeed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnMoveSpeedHandler, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onMoveEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: ClearAxis
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ETCJoystick+OnMoveEndHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onTouchStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnTouchStartHandler, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onTouchUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnTouchUpHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnDownUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnDownUpHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnDownDown:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnDownDownHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnDownLeft:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnDownLeftHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnDownRight:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnDownRightHandler, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnPressUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnDownUpHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnPressDown:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnDownDownHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnPressLeft:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnDownLeftHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnPressRight:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCJoystick+OnDownRightHandler, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  joystickType: 0
+  allowJoystickOverTouchPad: 0
+  radiusBase: 0
+  axisX:
+    name: Horizontal
+    enable: 1
+    range: 0
+    invertedAxis: 0
+    speed: 15
+    deadValue: .100000001
+    isEnertia: 0
+    inertia: 1
+    inertiaThreshold: .0799999982
+    isAutoStab: 0
+    autoStabThreshold: .00999999978
+    autoStabSpeed: 10
+    isClampRotation: 0
+    maxAngle: 90
+    minAngle: 90
+    isValueOverTime: 0
+    overTimeStep: 1
+    maxOverTimeValue: 1
+    axisValue: 0
+    axisSpeedValue: 0
+    axisThreshold: .5
+    axisState: 0
+    _directTransform: {fileID: 0}
+    directAction: 2
+    axisInfluenced: 0
+    actionOn: 1
+    directCharacterController: {fileID: 0}
+    directRigidBody: {fileID: 0}
+    gravity: 0
+    positivekey: 275
+    negativeKey: 276
+  axisY:
+    name: Vertical
+    enable: 1
+    range: 0
+    invertedAxis: 0
+    speed: 15
+    deadValue: .100000001
+    isEnertia: 0
+    inertia: 0
+    inertiaThreshold: .0799999982
+    isAutoStab: 0
+    autoStabThreshold: .00999999978
+    autoStabSpeed: 10
+    isClampRotation: 0
+    maxAngle: 90
+    minAngle: 90
+    isValueOverTime: 0
+    overTimeStep: 1
+    maxOverTimeValue: 1
+    axisValue: 0
+    axisSpeedValue: 0
+    axisThreshold: .5
+    axisState: 0
+    _directTransform: {fileID: 0}
+    directAction: 2
+    axisInfluenced: 0
+    actionOn: 1
+    directCharacterController: {fileID: 0}
+    directRigidBody: {fileID: 0}
+    gravity: 0
+    positivekey: 273
+    negativeKey: 274
+  thumb: {fileID: 22460868}
+  joystickArea: 2
+  userArea: {fileID: 0}
+  isNoReturnThumb: 0
+  isNoOffsetThumb: 0
+--- !u!114 &11498066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba60450c5a1202b41869d8ee7136c85f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _anchor: 3
+  _anchorOffet: {x: 100, y: 45}
+  _visible: 1
+  _activated: 1
+  pointId: -1
+  enableKeySimulation: 0
+  allowSimulationStandalone: 0
+  dPadAxisCount: 0
+  useFixedUpdate: 0
+  isOnDrag: 0
+  isSwipeIn: 0
+  isSwipeOut: 0
+  showPSInspector: 1
+  showSpriteInspector: 1
+  showEventInspector: 1
+  showBehaviourInspector: 1
+  showAxesInspector: 0
+  showTouchEventInspector: 0
+  showDownEventInspector: 0
+  showPressEventInspector: 0
+  onDown:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: InitPressedTime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ETCButton+OnDownHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetEmpower
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: EmpowerPressedTime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: ETCButton+OnPressedHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onPressedValue:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ETCButton+OnPressedValueandler, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetEmpower
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Attack
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ETCButton+OnUPHandler, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  axis:
+    name: Attack Button
+    enable: 1
+    range: 0
+    invertedAxis: 0
+    speed: 15
+    deadValue: .100000001
+    isEnertia: 0
+    inertia: 0
+    inertiaThreshold: .0799999982
+    isAutoStab: 0
+    autoStabThreshold: .00999999978
+    autoStabSpeed: 10
+    isClampRotation: 0
+    maxAngle: 90
+    minAngle: 90
+    isValueOverTime: 0
+    overTimeStep: 1
+    maxOverTimeValue: 1
+    axisValue: 0
+    axisSpeedValue: 0
+    axisThreshold: .5
+    axisState: 0
+    _directTransform: {fileID: 0}
+    directAction: 0
+    axisInfluenced: 0
+    actionOn: 1
+    directCharacterController: {fileID: 0}
+    directRigidBody: {fileID: 0}
+    gravity: 0
+    positivekey: 32
+    negativeKey: 0
+  normalSprite: {fileID: 21300000, guid: 4eaa16f80c6e1e34a8ed9e5a5acff92c, type: 3}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  pressedSprite: {fileID: 21300008, guid: becfdeef1534456438d787466a94d207, type: 3}
+  pressedColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!222 &22231080
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125396}
+--- !u!222 &22270156
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142854}
+--- !u!222 &22276788
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158368}
+--- !u!222 &22293792
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152358}
+--- !u!223 &22301798
+Canvas:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115584}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!224 &22422708
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142854}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 22430176}
+  m_RootOrder: 1
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -225, y: 170}
+  m_SizeDelta: {x: 250, y: 250}
+  m_Pivot: {x: .5, y: .5}
+--- !u!224 &22430176
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115584}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 22491850}
+  - {fileID: 22422708}
+  - {fileID: 22492404}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!224 &22460868
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158368}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 22491850}
+  m_RootOrder: 0
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 160, y: 160}
+  m_Pivot: {x: .5, y: .5}
+--- !u!224 &22491850
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125396}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 22460868}
+  m_Father: {fileID: 22430176}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 130, y: 129.733612}
+  m_SizeDelta: {x: 260, y: 260}
+  m_Pivot: {x: .5, y: .5}
+--- !u!224 &22492404
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152358}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 22430176}
+  m_RootOrder: 2
+  m_AnchorMin: {x: 1, y: .5}
+  m_AnchorMax: {x: 1, y: .5}
+  m_AnchoredPosition: {x: -125, y: -180}
+  m_SizeDelta: {x: 150, y: 150}
+  m_Pivot: {x: .5, y: .5}
+--- !u!225 &22506848
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125396}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 115584}
+  m_IsPrefabParent: 1
