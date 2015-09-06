@@ -322,7 +322,7 @@ namespace UnityChan
         IEnumerator SetPlayerToUnTouchable()
         {
             hpIsLocked = true;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(3);
             hpIsLocked = false;
         }
         
