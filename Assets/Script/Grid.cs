@@ -5,7 +5,8 @@ public class Grid : MonoBehaviour {
 	public int sizeX, sizeZ, nodeInterval = 1;
 	public GameObject nodePrefab, nodeHolderPrefab;
 	public Node [,] nodes;
-	
+	public Material bright, dark;
+
 	public bool CreateGrid(){
 		Transform nodeHolder;
 
@@ -21,6 +22,7 @@ public class Grid : MonoBehaviour {
 
 					obj = (GameObject)Instantiate(nodePrefab, new Vector3(i, 0.0f, j), Quaternion.identity);
 					obj.transform.parent = nodeHolder;
+					obj.GetComponent<Renderer>().material = (i + j) % 2 == 0 ? dark : bright;
 					nodes[i, j] = obj.GetComponent<Node>();
 					nodes[i, j].indexX = i;
 					nodes[i, j].indexZ = j;
