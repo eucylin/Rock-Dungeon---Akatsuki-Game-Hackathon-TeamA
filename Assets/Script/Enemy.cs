@@ -68,8 +68,8 @@ public class Enemy : MonoBehaviour {
 		direction = new int[4, 2];
 
 		interval = 1;
-		sizeX = 6;
-		sizeZ = 6;
+		sizeX = GameManager.instance.gridSizeX;
+		sizeZ = GameManager.instance.gridSizeZ;
 		visitedGrid = new bool[sizeX, sizeZ];
 		searchDirection = new int[sizeX, sizeZ];
 		obstacles = new int[sizeX, sizeZ];

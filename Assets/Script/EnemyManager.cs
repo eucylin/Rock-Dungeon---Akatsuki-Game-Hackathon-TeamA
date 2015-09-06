@@ -22,6 +22,8 @@ public class EnemyManager : MonoBehaviour
 		maxNumEnemy = 10;
 		sizeX = 6;
 		sizeZ = 6;
+		sizeX = GameManager.instance.gridSizeX;
+		sizeZ = GameManager.instance.gridSizeZ;
 		boxPosittions = new Vector3[sizeX * sizeZ];
 		obstacles = new int[sizeX, sizeZ];
 		blocked = new bool[spawnPoints.Length];
