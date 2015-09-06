@@ -34,8 +34,8 @@ namespace UnityChan
         Rock nowTouchedrock;
 
         public GUIBarScript hpBar;
-        public int maxHP = 4;
-        public int hp = 4;
+        public int maxHP = 8;
+        public int hp = 8;
         public bool hpIsLocked = false;
 
         public float h, v = 0;
@@ -97,11 +97,36 @@ namespace UnityChan
 		// 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
 		void FixedUpdate ()
 		{
-            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            //Xbox joystick A button
+            if (Input.GetKeyDown("joystick button 0"))
             {
-                h = Input.GetAxis("Horizontal");                // 入力デバイスの水平軸をhで定義
-                v = Input.GetAxis("Vertical");              // 入力デバイスの垂直軸をvで定義
+                InitPressedTime();
             }
+            if (Input.GetKey("joystick button 0"))
+            {
+                SetEmpower(true);
+                EmpowerPressedTime();
+                
+            }
+            if (Input.GetKeyUp("joystick button 0"))
+            {
+                SetEmpower(false);
+            }
+
+
+            if (Input.GetKey("joystick button 1"))
+            {
+                SetPull(true);
+            }
+
+            if (Input.GetKeyUp("joystick button 1"))
+            {
+                SetPull(false);
+            }
+#if UNITY_EDITOR
+            h = Input.GetAxis("Horizontal");                // 入力デバイスの水平軸をhで定義
+            v = Input.GetAxis("Vertical");              // 入力デバイスの垂直軸をvで定義
+#endif
             anim.SetFloat ("Speed", Mathf.Abs(v) > Mathf.Abs(h) ? Mathf.Abs(v) : Mathf.Abs(h));							// Animator側で設定している"Speed"パラメタにvを渡す
 			//anim.SetFloat ("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
 			anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
