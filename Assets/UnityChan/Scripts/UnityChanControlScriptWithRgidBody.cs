@@ -113,7 +113,7 @@ namespace UnityChan
 
                 //transform.LookAt(transform.position + new Vector3(h, 0, v));
                 // 以下、キャラクターの移動処理
-                velocity = new Vector3(cubeRotDir.x, 0, cubeRotDir.z); //new Vector3(h, 0, v);        // 上下のキー入力からZ軸方向の移動量を取得
+                velocity = new Vector3(cubeRotDir.x, 0, cubeRotDir.z) * 0.7f; //new Vector3(h, 0, v);        // 上下のキー入力からZ軸方向の移動量を取得
                                                         // キャラクターのローカル空間での方向に変換
                 //velocity = transform.TransformDirection(velocity);
 
@@ -146,7 +146,8 @@ namespace UnityChan
 
 
                 // 上下のキー入力でキャラクターを移動させる
-                transform.localPosition += velocity * Time.fixedDeltaTime;
+                //transform.localPosition += velocity * Time.fixedDeltaTime;
+                rb.MovePosition(transform.position + velocity * Time.fixedDeltaTime);
 
                 // 左右のキー入力でキャラクタをY軸で旋回させる
                 //transform.Rotate(0, h * rotateSpeed, 0);
@@ -260,7 +261,7 @@ namespace UnityChan
             if (value == false)
             {
                 Destroy(b3);
-                Instantiate(hitFire);
+                Instantiate(hitFire, transform.position, Quaternion.identity);
             }
         }
 
@@ -331,7 +332,7 @@ namespace UnityChan
             else if (t >= 3.5f && flag3 == false)
             {
                 flag3 = true;
-                b3 = Instantiate(bomb3, transform.position + new Vector3(0, 1f, 0), Quaternion.identity) as GameObject;
+                b3 = Instantiate(bomb3, transform.position + new Vector3(0, 0.7f, 0), Quaternion.identity) as GameObject;
             }
         }
     }
