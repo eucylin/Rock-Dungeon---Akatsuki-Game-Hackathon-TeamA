@@ -15,10 +15,11 @@ public class EnemyManager : MonoBehaviour
 	public int sizeX;
 	public int sizeZ;
 
-
+	public int maxNumEnemy;
 
 	void Start ()
 	{
+		maxNumEnemy = 10;
 		sizeX = 6;
 		sizeZ = 6;
 		boxPosittions = new Vector3[sizeX * sizeZ];
@@ -58,14 +59,16 @@ public class EnemyManager : MonoBehaviour
 			int Z = (int)spawnPoints[i].z;
 			if(obstacles[X,Z]==1)
 			{
+
 				blocked[i] = true;
 			}
 
 		}
-
+		GameObject [] EObject = GameObject.FindGameObjectsWithTag ("Enemy");
+		int size = EObject.Length;
 		// Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
 		for (int i = 0; i<spawnPoints.Length; i++) {
-			if(blocked[i]==false)
+			if(blocked[i]==false&&size<maxNumEnemy)
 				Instantiate (enemy, spawnPoints[i], Quaternion.identity);
 			//Instantiate (enemy, new Vector3 (0, 1.0f, 0), Quaternion.identity);
 		}
