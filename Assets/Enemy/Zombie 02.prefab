@@ -1475,7 +1475,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!95 &9551884
 Animator:
@@ -1508,6 +1508,9 @@ MonoBehaviour:
   player: {fileID: 158704, guid: 544b7250b4c8be745bccffe8b646c9f2, type: 2}
   gird1: {fileID: 0}
   speed: 0
+  falling: 0
+  fallingTime: 0
+  dyingTime: 0
   enemyHealth: 0
   damageTime: 0
   playerInSight: 0
@@ -1734,7 +1737,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Constraints
-      value: 80
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_TagString
@@ -1743,6 +1746,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Radius
+      value: .129999995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
