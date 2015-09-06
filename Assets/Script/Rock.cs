@@ -174,4 +174,13 @@ public class Rock : MonoBehaviour {
 			isPulling = false;
 		}
 	}
+
+	void OnCollisionEnter(Collision col){
+		if(col.gameObject.tag == "Enemy"){
+			if(isPushing){
+				col.gameObject.GetComponent<Enemy>().TakeDamage();
+				col.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(dirX * forceCoef, 0.0f, dirZ * forceCoef), ForceMode.Impulse);
+			}
+		}
+	}
 }
