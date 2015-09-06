@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour {
 
 	public bool falling;
 	public float fallingTime;
+	public float dyingTime;
 
 	//check enemy's health
 	public float enemyHealth;
@@ -51,6 +52,7 @@ public class Enemy : MonoBehaviour {
 	public bool firstUsed;
 	// Use this for initialization
 	void Start () {
+		dyingTime = 3.0f;
 		falling = false;
 		fallingTime = 2.0f;
 
@@ -66,8 +68,8 @@ public class Enemy : MonoBehaviour {
 		direction = new int[4, 2];
 
 		interval = 1;
-		sizeX = 6;
-		sizeZ = 6;
+		sizeX = GameManager.instance.gridSizeX;
+		sizeZ = GameManager.instance.gridSizeZ;
 		visitedGrid = new bool[sizeX, sizeZ];
 		searchDirection = new int[sizeX, sizeZ];
 		obstacles = new int[sizeX, sizeZ];
@@ -104,6 +106,10 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (isDied == true) {
+			Destroy(gameObject,3.0f);
+			gameObject.GetComponent<Collider>().enabled = false;
+		}
 		//掉落
 		if(falling)
 		{

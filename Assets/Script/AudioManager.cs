@@ -6,11 +6,8 @@ using System.Collections.Generic;
 public class AudioManager : MonoBehaviour {
     public enum AudioName
     {
-        DebuggerUsed,
-        EnemyHit,
-        EnemyDead,
+        EnemyHitByRock,
         GameOver,
-        ButtonClick
     }
 
     public static AudioManager instance;
