@@ -340,8 +340,8 @@ namespace UnityChan
                 {
                     col.enabled = false;
                     anim.SetTrigger("Dead");
-					EventManager.GameOver();
                     ReloadLevelDelay(2f);
+                    EventManager.GameOver();
                 }
             }
         }
@@ -359,7 +359,7 @@ namespace UnityChan
         IEnumerator ReloadLevelDelay(float t)
         {
             yield return new WaitForSeconds(t);
-            Application.LoadLevel(Application.loadedLevel);
+            Application.LoadLevel(0);
         }
 
         IEnumerator SetPlayerToUnTouchable()
