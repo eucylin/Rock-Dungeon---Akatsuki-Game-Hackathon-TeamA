@@ -23,6 +23,8 @@ namespace UnityChan
         public GameObject bomb3;
         public GameObject hitFire;
 
+        Rock nowTouchedrock;
+
         public GUIBarScript hpBar;
         public int maxHP = 4;
         public int hp = 4;
@@ -262,6 +264,10 @@ namespace UnityChan
             {
                 Destroy(b3);
                 Instantiate(hitFire, transform.position, Quaternion.identity);
+                if (isTouchingRock)
+                {
+                    nowTouchedrock.Push(transform.position.x, transform.position.z);
+                }
             }
         }
 
@@ -288,10 +294,19 @@ namespace UnityChan
                     col.enabled = false;
                     anim.SetTrigger("Dead");
                 }
-
             }
         }
-        
+
+        bool isTouchingRock = false;
+        void OnTriggerStay(Collider collider)
+        {
+            if(collider.tag == "Rock")
+            {
+                isTouchingRock = true;
+                nowTouchedrock = collider.GetComponent<Rock>();
+            }
+        }
+
         IEnumerator SetPlayerToUnTouchable()
         {
             hpIsLocked = true;
