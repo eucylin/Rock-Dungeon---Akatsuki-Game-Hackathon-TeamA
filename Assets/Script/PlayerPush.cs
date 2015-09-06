@@ -7,7 +7,7 @@ public class PlayerPush : MonoBehaviour {
 	bool isTouchingRock = false;
 
 	void Update(){
-		if(Input.GetKey(KeyCode.W)){
+		/*if(Input.GetKey(KeyCode.W)){
 			transform.position += Vector3.forward * Time.deltaTime * 3f;
 		}
 		if(Input.GetKey(KeyCode.A)){
@@ -20,11 +20,16 @@ public class PlayerPush : MonoBehaviour {
 			transform.position += Vector3.right * Time.deltaTime * 3f;
 		}
 
-		if(Input.GetKeyDown(KeyCode.Space)){
+		if(Input.GetKeyDown(KeyCode.N)){
 			if(isTouchingRock && rockScript != null){
 				rockScript.Push(transform.position.x, transform.position.z, pushForce);
 			}
 		}
+		else if(Input.GetKeyDown(KeyCode.M)){
+			if(isTouchingRock && rockScript != null){
+				rockScript.Pull(transform.position.x, transform.position.z);
+			}
+		}*/
 	}
 	
 	void OnTriggerStay(Collider col){
