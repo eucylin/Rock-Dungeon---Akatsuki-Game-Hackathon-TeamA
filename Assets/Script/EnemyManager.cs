@@ -21,7 +21,7 @@ public class EnemyManager : MonoBehaviour
 	{
 		sizeX = 6;
 		sizeZ = 6;
-
+		boxPosittions = new Vector3[sizeX * sizeZ];
 		obstacles = new int[sizeX, sizeZ];
 		blocked = new bool[spawnPoints.Length];
 		currentTime = 2.0f;
@@ -67,6 +67,24 @@ public class EnemyManager : MonoBehaviour
 
 	void updateBoxPosition()
 	{
+		GameObject [] boxObject = GameObject.FindGameObjectsWithTag ("Rock");
+		int size = 0;
+		for (int i = 0; i<boxObject.Length; i++) {
+			boxPosittions[i] = boxObject[i].transform.position;
+			size = i;
+		}
+		
+		//update box Position
+		for (int i = 0; i<sizeX; i++)
+			for (int j = 0; j<sizeZ; j++)
+				obstacles [i, j] = 0;
+		for(int i = 0;i<size;i++)
+		{
+			int X = (int)( boxPosittions[i].x);
+			int Z = (int)( boxPosittions[i].z);
+			obstacles[X,Z] = 1;
+		}
+		/*
 		for (int i = 0; i<sizeX; i++)
 			for (int j = 0; j<sizeZ; j++)
 				obstacles [i, j] = 0;
@@ -76,7 +94,7 @@ public class EnemyManager : MonoBehaviour
 			obstacles[X,Z] = 1;
 
 		}
-
+		*/
 
 	}
 }

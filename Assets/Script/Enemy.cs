@@ -149,8 +149,8 @@ public class Enemy : MonoBehaviour {
 				obstacles [i, j] = 0;
 		for(int i = 0;i<size;i++)
 		{
-			int X = (int)Mathf.RoundToInt( boxPosition[i].x);
-			int Z = (int)Mathf.RoundToInt( boxPosition[i].z);
+			int X = (int)( boxPosition[i].x);
+			int Z = (int)( boxPosition[i].z);
 			obstacles[X,Z] = 1;
 		}
 		sizeOfPositions = 0;
@@ -256,12 +256,12 @@ public class Enemy : MonoBehaviour {
 	void findTarget(float x,float z)
 	{
 		//Target
-		int targetX = (int)Mathf.RoundToInt(x);
-		int targetZ = (int)Mathf.RoundToInt(z);
+		int targetX = (int)(x);
+		int targetZ = (int)(z);
 
 		//Enemy X,Z
-		int sourceX=(int)Mathf.RoundToInt(gridPosition.x);
-		int sourceZ=(int)Mathf.RoundToInt(gridPosition.z);
+		int sourceX=(int)(gridPosition.x);
+		int sourceZ=(int)(gridPosition.z);
 
 		//DebugLogger.Log (sourceX);
 		//DebugLogger.Log (sourceZ);
@@ -308,6 +308,7 @@ public class Enemy : MonoBehaviour {
 			qf++;
 		}
 		if (visitedGrid [targetX, targetZ] == false) {
+			print ("QQ");
 			for(int i = 0;i<sizeX;i++)
 				for(int j = 0;j<sizeZ;j++)
 				if(visitedGrid[i,j]==true){
