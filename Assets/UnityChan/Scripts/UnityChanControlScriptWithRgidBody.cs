@@ -15,6 +15,16 @@ namespace UnityChan
 
 	public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 	{
+        public GameObject empower1;
+        public GameObject bomb1;
+        public GameObject empower2;
+        public GameObject bomb2;
+        public GameObject empower3;
+        public GameObject bomb3;
+        public GameObject hitFire;
+
+        public int hp = 4;
+
         public float h, v = 0;
 
 		public float animSpeed = 1.5f;				// アニメーション再生速度設定
@@ -25,7 +35,7 @@ namespace UnityChan
 
 		// 以下キャラクターコントローラ用パラメタ
 		// 前進速度
-		public float forwardSpeed = 7.0f;
+		public float forwardSpeed = 1.0f;
 		// 後退速度
 		public float backwardSpeed = 2.0f;
 		// 旋回速度
@@ -74,14 +84,13 @@ namespace UnityChan
 		// 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
 		void FixedUpdate ()
 		{
-            Debug.Log(Input.GetAxis ("Horizontal"));
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
                 h = Input.GetAxis("Horizontal");                // 入力デバイスの水平軸をhで定義
                 v = Input.GetAxis("Vertical");              // 入力デバイスの垂直軸をvで定義
             }
-            anim.SetFloat ("Speed", v);							// Animator側で設定している"Speed"パラメタにvを渡す
-			anim.SetFloat ("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
+            anim.SetFloat ("Speed", Mathf.Abs(v) > Mathf.Abs(h) ? Mathf.Abs(v) : Mathf.Abs(h));							// Animator側で設定している"Speed"パラメタにvを渡す
+			//anim.SetFloat ("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
 			anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
 			currentBaseState = anim.GetCurrentAnimatorStateInfo (0);	// 参照用のステート変数にBase Layer (0)の現在のステートを設定する
 			rb.useGravity = true;//ジャンプ中に重力を切るので、それ以外は重力の影響を受けるようにする
@@ -89,19 +98,33 @@ namespace UnityChan
 
             if (currentBaseState.nameHash == idleState || currentBaseState.nameHash == locoState || currentBaseState.nameHash == jumpState || currentBaseState.nameHash == walkBackState || currentBaseState.nameHash == restState)
             {
+
+                Vector3 moveVectorX = cameraObject.transform.right * h;
+                Vector3 moveVectorY = cameraObject.transform.up * v;
+
+                Vector3 moveVector = (moveVectorX + moveVectorY).normalized * Time.deltaTime;
+
+                Vector3 cubeRotDir = new Vector3(moveVector.x, 0, moveVector.y).normalized;
+                transform.LookAt(transform.position + cubeRotDir);
+
+
+                //transform.LookAt(transform.position + new Vector3(h, 0, v));
                 // 以下、キャラクターの移動処理
-                velocity = new Vector3(0, 0, v);        // 上下のキー入力からZ軸方向の移動量を取得
+                velocity = new Vector3(cubeRotDir.x, 0, cubeRotDir.z); //new Vector3(h, 0, v);        // 上下のキー入力からZ軸方向の移動量を取得
                                                         // キャラクターのローカル空間での方向に変換
-                velocity = transform.TransformDirection(velocity);
-                //以下のvの閾値は、Mecanim側のトランジションと一緒に調整する
-                if (v > 0.1)
-                {
-                    velocity *= forwardSpeed;       // 移動速度を掛ける
-                }
-                else if (v < -0.1)
-                {
-                    velocity *= backwardSpeed;  // 移動速度を掛ける
-                }
+                //velocity = transform.TransformDirection(velocity);
+
+                velocity *= forwardSpeed;
+
+                ////以下のvの閾値は、Mecanim側のトランジションと一緒に調整する
+                //if (v > 0.1)
+                //{
+                //    velocity *= forwardSpeed;       // 移動速度を掛ける
+                //}
+                //else if (v < -0.1)
+                //{
+                //    velocity *= backwardSpeed;  // 移動速度を掛ける
+                //}
 
                 if (Input.GetButtonDown("Jump"))
                 {   // スペースキーを入力したら
@@ -123,7 +146,7 @@ namespace UnityChan
                 transform.localPosition += velocity * Time.fixedDeltaTime;
 
                 // 左右のキー入力でキャラクタをY軸で旋回させる
-                transform.Rotate(0, h * rotateSpeed, 0);
+                //transform.Rotate(0, h * rotateSpeed, 0);
 
             }
 			// 以下、Animatorの各ステート中での処理
@@ -218,16 +241,35 @@ namespace UnityChan
         {
             h = v2.x;
             v = v2.y;
+            DebugLogger.Log("("  + v2.x + "," + v2.y + ")");
         }
 
         public void ClearAxis()
         {
             h = v = 0;
         }
+        bool flag1, flag2, flag3, flag4;
 
+        GameObject b3;
         public void SetEmpower(bool value)
         {
             anim.SetBool("Empower", value);
+            if (value == false)
+            {
+                Destroy(b3);
+                Instantiate(hitFire);
+            }
+        }
+
+        IEnumerator DestroyAfterSec(GameObject beDestroyed,float time)
+        {
+            yield return new WaitForSeconds(time);
+            
+        }
+
+        public void SetPull(bool value)
+        {
+            anim.SetBool("Pull", value);
         }
 
         void OnCollisionEnter(Collision collision)
@@ -236,5 +278,41 @@ namespace UnityChan
                 anim.SetTrigger("Damage");
         }
 
+        public float t = 0;
+        public void InitPressedTime()
+        {
+            t = 0;
+            flag1 = flag2 = flag3 = flag4 = false;
+            GameObject em1 = Instantiate(empower1, transform.position + new Vector3(0, 1f, 0), Quaternion.identity) as GameObject;
+            Destroy(em1, 1);
+        }
+
+        public void EmpowerPressedTime()
+        {
+            t += Time.deltaTime;
+            DebugLogger.Log(t);
+            if (t >= 1 && t < 2 && flag1 == false)
+            {
+                flag1 = true;
+                GameObject b1 = Instantiate(bomb1, transform.position, Quaternion.identity) as GameObject;
+                Destroy(b1, 1);
+                GameObject em2 =  Instantiate(empower2, transform.position + new Vector3(0, 1f, 0) +transform.right * 0.1f, Quaternion.identity) as GameObject;
+                em2.transform.localScale *= 4;
+                Destroy(em2, 1);
+            }
+            else if (t >= 2 && t < 3 && flag2 == false)
+            {
+                flag2 = true;
+                GameObject b2 = Instantiate(bomb2, transform.position + new Vector3(0, 1f, 0), Quaternion.identity) as GameObject;
+                Destroy(b2, 1);
+                GameObject em3 = Instantiate(empower3, transform.position + new Vector3(0, 1f, 0) + transform.right * 0.1f, Quaternion.identity) as GameObject;
+                Destroy(em3, 2.5f);
+            }
+            else if (t >= 3.5f && flag3 == false)
+            {
+                flag3 = true;
+                b3 = Instantiate(bomb3, transform.position + new Vector3(0, 1f, 0), Quaternion.identity) as GameObject;
+            }
+        }
     }
 }
