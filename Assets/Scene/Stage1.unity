@@ -913,7 +913,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11443108, guid: 238e901a7992fe54abaea88dcc1cbeeb, type: 2}
       propertyPath: blocked.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11443108, guid: 238e901a7992fe54abaea88dcc1cbeeb, type: 2}
       propertyPath: spawnPoints.Array.size
@@ -965,11 +965,19 @@ Prefab:
       objectReference: {fileID: 174748, guid: 85598135c9b65d4439cd3cd09033717c, type: 2}
     - target: {fileID: 11443108, guid: 238e901a7992fe54abaea88dcc1cbeeb, type: 2}
       propertyPath: spawnPoints.Array.data[0].z
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11443108, guid: 238e901a7992fe54abaea88dcc1cbeeb, type: 2}
       propertyPath: spawnPoints.Array.data[0].y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11443108, guid: 238e901a7992fe54abaea88dcc1cbeeb, type: 2}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 181628, guid: 0beab31c887e11843ae70b69cc86f0ce, type: 2}
+    - target: {fileID: 11443108, guid: 238e901a7992fe54abaea88dcc1cbeeb, type: 2}
+      propertyPath: spawnPoints.Array.data[0].x
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 238e901a7992fe54abaea88dcc1cbeeb, type: 2}
@@ -2760,7 +2768,6 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
