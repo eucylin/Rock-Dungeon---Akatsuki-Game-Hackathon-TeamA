@@ -40,6 +40,9 @@ public class Enemy : MonoBehaviour {
 	public Vector3 []possiblePositions;
 	public int sizeOfPositions;
 
+	public int animationState;//0:Idle,1:damaged,2:die
+	public float animationTime;
+
 	// Use this for initialization
 	void Start () {
 
@@ -79,10 +82,31 @@ public class Enemy : MonoBehaviour {
 		//initialize
 		//tempPosition = targetPosition;
 
+		animationState = 0;
+		animationTime = 0.0f;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		animationTime -= Time.deltaTime;
+		if (animationTime <= 0.0f) {
+			animationTime = 0.0f;
+			animationState = 0;
+		}
+
+		switch (animationState) {
+		case 0:
+
+			break;
+		case 1:
+
+			break;
+		case 2:
+
+			break;
+		}
+
 		//DebugLogger.Log ("Update");
 		//update obstacles position
 		UpdateObstacles ();
@@ -97,9 +121,9 @@ public class Enemy : MonoBehaviour {
 			//Destroy (gameObject);
 		}
 
-		if (playerInSight == true)
+		if (playerInSight == true&&animationState==0)
 			Attack ();
-		else
+		else if(animationState==0)
 			Patrol ();
 
 		if (isDied==true) {
@@ -323,6 +347,8 @@ public class Enemy : MonoBehaviour {
 		if (damageTime <= 0.1f) {
 			enemyHealth -= 5.0f;
 			damageTime = 1.0f;
+			animationState = 1;
+			animationTime = 1.0f;
 		}
 	}
 

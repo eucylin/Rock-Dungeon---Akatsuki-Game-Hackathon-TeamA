@@ -21,8 +21,9 @@ public class EnemyManager : MonoBehaviour
 	{
 		sizeX = 6;
 		sizeZ = 6;
+
 		obstacles = new int[sizeX, sizeZ];
-	
+		blocked = new bool[spawnPoints.Length];
 		currentTime = 2.0f;
 		for (int i = 0; i<blocked.Length; i++)
 			blocked [i] = false;
@@ -53,10 +54,15 @@ public class EnemyManager : MonoBehaviour
 			{
 				blocked[i] = true;
 			}
-		}
-		// Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
-		Instantiate (enemy, new Vector3(0,1.0f,0), Quaternion.identity);
 
+		}
+
+		// Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
+		for (int i = 0; i<spawnPoints.Length; i++) {
+			if(blocked[i]==false)
+				Instantiate (enemy, spawnPoints[i], Quaternion.identity);
+			//Instantiate (enemy, new Vector3 (0, 1.0f, 0), Quaternion.identity);
+		}
 	}
 
 	void updateBoxPosition()
