@@ -261,7 +261,7 @@ namespace UnityChan
             if (value == false)
             {
                 Destroy(b3);
-                Instantiate(hitFire);
+                Instantiate(hitFire, transform.position, Quaternion.identity);
             }
         }
 
@@ -332,7 +332,7 @@ namespace UnityChan
             else if (t >= 3.5f && flag3 == false)
             {
                 flag3 = true;
-                b3 = Instantiate(bomb3, transform.position + new Vector3(0, 1f, 0), Quaternion.identity) as GameObject;
+                b3 = Instantiate(bomb3, transform.position + new Vector3(0, 0.7f, 0), Quaternion.identity) as GameObject;
             }
         }
     }
