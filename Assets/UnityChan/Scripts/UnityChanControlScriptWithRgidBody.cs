@@ -316,6 +316,7 @@ namespace UnityChan
                     col.enabled = false;
                     anim.SetTrigger("Dead");
 					EventManager.GameOver();
+                    ReloadLevelDelay(2f);
                 }
             }
         }
@@ -328,6 +329,12 @@ namespace UnityChan
                 isTouchingRock = true;
                 nowTouchedrock = collider.GetComponent<Rock>();
             }
+        }
+
+        IEnumerator ReloadLevelDelay(float t)
+        {
+            yield return new WaitForSeconds(t);
+            Application.LoadLevel(Application.loadedLevel);
         }
 
         IEnumerator SetPlayerToUnTouchable()
