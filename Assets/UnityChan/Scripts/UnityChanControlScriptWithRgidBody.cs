@@ -23,6 +23,14 @@ namespace UnityChan
         public GameObject bomb3;
         public GameObject hitFire;
 
+        public AudioSource pushSound;
+        public AudioSource empowerSound;
+        public AudioSource bomb1Sound;
+        public AudioSource bomb2Sound;
+        public AudioSource bomb3Sound;
+
+
+
         Rock nowTouchedrock;
 
         public GUIBarScript hpBar;
@@ -262,10 +270,12 @@ namespace UnityChan
             anim.SetBool("Empower", value);
             if (value == false)
             {
+                empowerSound.Stop();
                 Destroy(b3);
                 Instantiate(hitFire, transform.position, Quaternion.identity);
                 if (isTouchingRock)
                 {
+                    pushSound.Play();
                     if(flag3)
                         nowTouchedrock.Push(transform.position.x, transform.position.z, 4);
                     else if(flag2)
@@ -332,6 +342,7 @@ namespace UnityChan
             t = 0;
             flag1 = flag2 = flag3 = flag4 = false;
             GameObject em1 = Instantiate(empower1, transform.position + new Vector3(0, 1f, 0), Quaternion.identity) as GameObject;
+            empowerSound.Play();
             Destroy(em1, 1);
         }
 
@@ -344,6 +355,7 @@ namespace UnityChan
                 flag1 = true;
                 GameObject b1 = Instantiate(bomb1, transform.position, Quaternion.identity) as GameObject;
                 Destroy(b1, 1);
+                bomb1Sound.Play();
                 GameObject em2 =  Instantiate(empower2, transform.position + new Vector3(0, 1f, 0) +transform.right * 0.1f, Quaternion.identity) as GameObject;
                 em2.transform.localScale *= 4;
                 Destroy(em2, 1);
@@ -353,6 +365,7 @@ namespace UnityChan
                 flag2 = true;
                 GameObject b2 = Instantiate(bomb2, transform.position + new Vector3(0, 1f, 0), Quaternion.identity) as GameObject;
                 Destroy(b2, 1);
+                bomb2Sound.Play();
                 GameObject em3 = Instantiate(empower3, transform.position + new Vector3(0, 1f, 0) + transform.right * 0.1f, Quaternion.identity) as GameObject;
                 Destroy(em3, 2.5f);
             }
@@ -360,6 +373,7 @@ namespace UnityChan
             {
                 flag3 = true;
                 b3 = Instantiate(bomb3, transform.position + new Vector3(0, 0.7f, 0), Quaternion.identity) as GameObject;
+                bomb3Sound.Play();
             }
         }
     }
