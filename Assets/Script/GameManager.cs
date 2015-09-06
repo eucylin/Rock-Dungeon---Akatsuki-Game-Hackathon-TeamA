@@ -56,5 +56,10 @@ public class GameManager : MonoBehaviour {
 		gamesState = GameState.GameOver;
 		AudioManager.instance.PlaySound(AudioManager.AudioName.GameOver);
 	}
+
+    public void LoadScene(int n)
+    {
+        Application.LoadLevel(n);
+    }
 }
 

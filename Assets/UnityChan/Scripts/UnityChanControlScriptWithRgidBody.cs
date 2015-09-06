@@ -28,6 +28,7 @@ namespace UnityChan
         public AudioSource bomb1Sound;
         public AudioSource bomb2Sound;
         public AudioSource bomb3Sound;
+        public AudioSource beHurt;
 
 
 
@@ -313,12 +314,6 @@ namespace UnityChan
             }
         }
 
-        IEnumerator DestroyAfterSec(GameObject beDestroyed,float time)
-        {
-            yield return new WaitForSeconds(time);
-            
-        }
-
         public void SetPull(bool value)
         {
             anim.SetBool("Pull", value);
@@ -333,6 +328,7 @@ namespace UnityChan
             if (collision.transform.tag == "Enemy" && !hpIsLocked)
             {
                 anim.SetTrigger("Damage");
+                beHurt.Play();
                 hp -= 1;
                 hpBar.Value = (float)hp / maxHP;
                 SetPlayerToUnTouchable();
@@ -340,8 +336,8 @@ namespace UnityChan
                 {
                     col.enabled = false;
                     anim.SetTrigger("Dead");
-                    ReloadLevelDelay(2f);
                     EventManager.GameOver();
+                    ReloadLevelDelay(1.8f);
                 }
             }
         }
@@ -356,9 +352,9 @@ namespace UnityChan
             }
         }
 
-        IEnumerator ReloadLevelDelay(float t)
+        IEnumerator ReloadLevelDelay(float waitTime)
         {
-            yield return new WaitForSeconds(t);
+            yield return new WaitForSeconds(waitTime);
             Application.LoadLevel(0);
         }
 
