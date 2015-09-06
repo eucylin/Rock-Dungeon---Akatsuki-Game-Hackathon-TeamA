@@ -2,7 +2,7 @@
 using System.Collections;
 public class EnemyManager : MonoBehaviour
 {
-	 
+	public GameObject spawner; 
 	public GameObject enemy;                // The enemy prefab to be spawned.
 	public float spawnTime = 3.0f;            // How long between each spawn.
 	//public Transform[] spawnPoints;         // An array of the spawn points this enemy can spawn from.
@@ -27,7 +27,13 @@ public class EnemyManager : MonoBehaviour
 		currentTime = 2.0f;
 		for (int i = 0; i<blocked.Length; i++)
 			blocked [i] = false;
-		//Spawn();
+		for (int i = 0; i<spawnPoints.Length; i++) {
+			Quaternion quate = Quaternion.identity;
+		
+				quate.eulerAngles = new Vector3(90, 0, 0);
+			Instantiate (spawner, new Vector3(spawnPoints [i].x,0.5f,spawnPoints[i].z), quate);
+		
+		}//Spawn();
 
 		// Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
 		//InvokeRepeating ("Spawn", spawnTime, spawnTime);
@@ -78,7 +84,7 @@ public class EnemyManager : MonoBehaviour
 		for (int i = 0; i<sizeX; i++)
 			for (int j = 0; j<sizeZ; j++)
 				obstacles [i, j] = 0;
-		for(int i = 0;i<size;i++)
+		for(int i = 0;i<=size;i++)
 		{
 			int X = (int)( boxPosittions[i].x);
 			int Z = (int)( boxPosittions[i].z);
