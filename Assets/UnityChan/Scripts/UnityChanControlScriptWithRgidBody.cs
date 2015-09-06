@@ -40,7 +40,7 @@ namespace UnityChan
 
 		// 以下キャラクターコントローラ用パラメタ
 		// 前進速度
-		public float forwardSpeed = 1.0f;
+		public float forwardSpeed = 2.0f;
 		// 後退速度
 		public float backwardSpeed = 2.0f;
 		// 旋回速度
@@ -287,6 +287,10 @@ namespace UnityChan
         public void SetPull(bool value)
         {
             anim.SetBool("Pull", value);
+            if(value == true && isTouchingRock)
+            {
+                nowTouchedrock.Pull(transform.position.x, transform.position.z);
+            }
         }
 
         void OnCollisionEnter(Collision collision)
@@ -296,6 +300,7 @@ namespace UnityChan
                 anim.SetTrigger("Damage");
                 hp -= 1;
                 hpBar.Value = (float)hp / maxHP;
+                SetPlayerToUnTouchable();
                 if(hp <= 0 )
                 {
                     col.enabled = false;
