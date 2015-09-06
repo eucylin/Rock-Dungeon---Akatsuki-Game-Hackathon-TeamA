@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour {
 	public int [,] searchQueue;
 	public int [,] obstacles;//障礙物
 
+	public float updateTime;
+	public float currentTime;
 
 	public Vector3 targetPosition;
 	//temp move position
@@ -43,10 +45,14 @@ public class Enemy : MonoBehaviour {
 	public int animationState;//0:Idle,1:damaged,2:die
 	public float animationTime;
 
+	public bool firstUsed;
 	// Use this for initialization
 	void Start () {
+		currentTime = 0.0f;
+		updateTime = 1.0f;
+		firstUsed = true;
 
-		speed = 3.0f;
+		speed = 2.0f;
 		enemyHealth = 10.0f;
 		damageTime = 0.0f;
 		playerInSight = false;
@@ -85,6 +91,9 @@ public class Enemy : MonoBehaviour {
 		animationState = 0;
 		animationTime = 0.0f;
 
+		tempPosition = new Vector3 (0, 0, 0);
+		faceDirection = new Vector3 (0, 0, 0);
+
 	}
 	
 	// Update is called once per frame
@@ -109,9 +118,12 @@ public class Enemy : MonoBehaviour {
 
 		//DebugLogger.Log ("Update");
 		//update obstacles position
-		UpdateObstacles ();
-		CalGridPosition();
-
+		//currentTime += Time.deltaTime;
+		//if (currentTime > updateTime) {
+			//currentTime = 0.0f;
+			UpdateObstacles ();
+			CalGridPosition ();
+		//}
 		damageTime -= Time.deltaTime;
 		if (damageTime <= 0.0f)
 			damageTime = 0.0f;
@@ -121,9 +133,9 @@ public class Enemy : MonoBehaviour {
 			//Destroy (gameObject);
 		}
 
-		if (playerInSight == true&&animationState==0)
+		if (playerInSight == true)
 			Attack ();
-		else if(animationState==0)
+		else 
 			Patrol ();
 
 		if (isDied==true) {
@@ -137,6 +149,7 @@ public class Enemy : MonoBehaviour {
 	void UpdateObstacles()
 	{
 		GameObject [] boxObject = GameObject.FindGameObjectsWithTag ("Rock");
+		//DebugLogger.Log (boxObject.Length);
 		int size = 0;
 		for (int i = 0; i<boxObject.Length; i++) {
 			boxPosition[i] = boxObject[i].transform.position;
@@ -147,7 +160,7 @@ public class Enemy : MonoBehaviour {
  		for (int i = 0; i<sizeX; i++)
 			for (int j = 0; j<sizeZ; j++)
 				obstacles [i, j] = 0;
-		for(int i = 0;i<size;i++)
+		for(int i = 0;i<=size;i++)
 		{
 			int X = (int)( boxPosition[i].x);
 			int Z = (int)( boxPosition[i].z);
@@ -162,18 +175,20 @@ public class Enemy : MonoBehaviour {
 				possiblePositions[sizeOfPositions].z = j;
 				sizeOfPositions++;
 			}
-
-		int indexP = Random.Range (0, sizeOfPositions );
-		targetPosition = possiblePositions [indexP];
-		targetPosition.y = 0;
+	
+			int indexP = Random.Range (0, sizeOfPositions);
+			targetPosition = possiblePositions [indexP];
+			targetPosition.y = 0;
 
 	}
 
 	void CalGridPosition()
 	{
 		Vector3 pos = gameObject.transform.position;
-		int X = (int)Mathf.RoundToInt(pos.x);
-		int Z = (int)Mathf.RoundToInt(pos.z);
+
+		int X = (int)(pos.x+0.5f);
+		int Z = (int)(pos.z+0.5f);
+
 		gridPosition.x = (float)X;
 		gridPosition.z = (float)Z;
 		if (X < 0 || X >= sizeX || Z < 0 || Z >= sizeZ) {
@@ -188,17 +203,21 @@ public class Enemy : MonoBehaviour {
 	//Attack
 	void Attack()
 	{
-		//chase player
+		if (firstUsed) {
+			findTarget (playerPosition.x, playerPosition.z);
+			firstUsed = false;
+		}
+			//chase player
 		//playerPosition = player.transform.position;
 		Vector3 diffFromTarget = playerPosition - gameObject.transform.position;
 		diffFromTarget.y = 0;
-		if (diffFromTarget.magnitude <= 0.3) {
+		if (diffFromTarget.magnitude <= 0.1) {
 
 			return;
 		} 
 		Vector3 diffTemp = tempPosition - gameObject.transform.position;
 		diffTemp.y = 0;
-		if (diffTemp.magnitude <= 0.3) {
+		if (diffTemp.magnitude <= 0.1) {
 			
 			findTarget(playerPosition.x,playerPosition.z);
 			CalGridPosition();
@@ -212,9 +231,13 @@ public class Enemy : MonoBehaviour {
 	//巡邏
 	void Patrol()
 	{
+		if (firstUsed) {
+			findTarget (playerPosition.x, playerPosition.z);
+			firstUsed = false;
+		}
 		Vector3 diffFromTarget = targetPosition - gameObject.transform.position;
 		diffFromTarget.y = 0;
-		if (diffFromTarget.magnitude <= 0.3) {
+		if (diffFromTarget.magnitude <= 0.1) {
 			//DebugLogger.Log (targetPosition);
 			//DebugLogger.Log (gridPosition);
 			//DebugLogger.Log (diffFromTarget);
@@ -226,7 +249,7 @@ public class Enemy : MonoBehaviour {
 
 		Vector3 diffTemp = tempPosition - gameObject.transform.position;
 		diffTemp.y = 0;
-		if (diffTemp.magnitude <= 0.3) {
+		if (diffTemp.magnitude <= 0.1) {
 
 			findTarget(targetPosition.x,targetPosition.z);
 			//gridPosition = tempPosition;
@@ -308,7 +331,7 @@ public class Enemy : MonoBehaviour {
 			qf++;
 		}
 		if (visitedGrid [targetX, targetZ] == false) {
-			print ("QQ");
+
 			for(int i = 0;i<sizeX;i++)
 				for(int j = 0;j<sizeZ;j++)
 				if(visitedGrid[i,j]==true){
@@ -317,6 +340,7 @@ public class Enemy : MonoBehaviour {
 					targetPosition.x = (float)targetX;
 					targetPosition.z = (float)targetZ;
 				}
+			return ;
 		
 		}
 
@@ -335,8 +359,15 @@ public class Enemy : MonoBehaviour {
 		}
 
 		tempPosition = gridPosition + new Vector3 ((float)direction [dirIndex,0], 0, (float)direction [dirIndex,1]);
+		if (tempPosition.x < 0) {
+			tempPosition.x *= -1.0f;
+			dirIndex = (dirIndex+2)%4;
+		}
+		if(tempPosition.z<0)
+			tempPosition.z*=-1.0f;
 		faceDirection = new Vector3 ((float)direction [dirIndex, 0], 0, (float)direction [dirIndex, 1]);
 		faceDirection.y = 0;
+		tempPosition.y = gameObject.transform.position.y;
 		gameObject.transform.LookAt (tempPosition);
 		//DebugLogger.Log (tempPosition);
 		//DebugLogger.Log (faceDirection);
