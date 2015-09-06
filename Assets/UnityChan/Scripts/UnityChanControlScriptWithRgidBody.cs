@@ -331,13 +331,13 @@ namespace UnityChan
                 beHurt.Play();
                 hp -= 1;
                 hpBar.Value = (float)hp / maxHP;
-                SetPlayerToUnTouchable();
+                StartCoroutine(SetPlayerToUnTouchable());
                 if(hp <= 0 )
                 {
                     col.enabled = false;
                     anim.SetTrigger("Dead");
                     EventManager.GameOver();
-                    ReloadLevelDelay(1.8f);
+                    StartCoroutine(ReloadLevelDelay(1.8f));
                 }
             }
         }
@@ -361,7 +361,7 @@ namespace UnityChan
         IEnumerator SetPlayerToUnTouchable()
         {
             hpIsLocked = true;
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1.5f);
             hpIsLocked = false;
         }
         
