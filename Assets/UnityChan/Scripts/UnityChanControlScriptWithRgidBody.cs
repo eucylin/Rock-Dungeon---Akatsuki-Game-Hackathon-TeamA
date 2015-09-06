@@ -280,8 +280,14 @@ namespace UnityChan
             if (collision.transform.tag == "Enemy" && !hpIsLocked)
             {
                 anim.SetTrigger("Damage");
-                hp -= 1;
+                hp -= 3;
                 hpBar.Value = (float)hp / maxHP;
+                if(hp <= 0 )
+                {
+                    col.enabled = false;
+                    anim.SetTrigger("Dead");
+                }
+
             }
         }
         
@@ -291,7 +297,7 @@ namespace UnityChan
             yield return new WaitForSeconds(2);
             hpIsLocked = false;
         }
-
+        
         public float t = 0;
         public void InitPressedTime()
         {
