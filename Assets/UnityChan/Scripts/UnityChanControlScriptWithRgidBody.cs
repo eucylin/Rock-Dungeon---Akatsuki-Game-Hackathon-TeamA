@@ -23,7 +23,10 @@ namespace UnityChan
         public GameObject bomb3;
         public GameObject hitFire;
 
+        public GUIBarScript hpBar;
+        public int maxHP = 4;
         public int hp = 4;
+        public bool hpIsLocked = false;
 
         public float h, v = 0;
 
@@ -274,8 +277,19 @@ namespace UnityChan
 
         void OnCollisionEnter(Collision collision)
         {
-            if (collision.transform.tag == "Enemy")
+            if (collision.transform.tag == "Enemy" && !hpIsLocked)
+            {
                 anim.SetTrigger("Damage");
+                hp -= 1;
+                hpBar.Value = (float)hp / maxHP;
+            }
+        }
+        
+        IEnumerator SetPlayerToUnTouchable()
+        {
+            hpIsLocked = true;
+            yield return new WaitForSeconds(2);
+            hpIsLocked = false;
         }
 
         public float t = 0;
