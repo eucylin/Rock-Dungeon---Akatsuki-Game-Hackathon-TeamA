@@ -42,6 +42,7 @@ MonoBehaviour:
   gamesState: 0
   gridSizeX: 12
   gridSizeZ: 8
+  levelClearUI: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -302,14 +302,26 @@ namespace UnityChan
                 if (isTouchingRock)
                 {
                     pushSound.Play();
-                    if(flag3)
-                        nowTouchedrock.Push(transform.position.x, transform.position.z, 4);
-                    else if(flag2)
-                        nowTouchedrock.Push(transform.position.x, transform.position.z, 3);
+                    if (flag3)
+                    {
+                        if (nowTouchedrock != null)
+                            nowTouchedrock.Push(transform.position.x, transform.position.z, 4);
+                    }
+                    else if (flag2)
+                    {
+                        if (nowTouchedrock != null)
+                            nowTouchedrock.Push(transform.position.x, transform.position.z, 3);
+                    }
                     else if (flag1)
-                        nowTouchedrock.Push(transform.position.x, transform.position.z, 2);
+                    {
+                        if (nowTouchedrock != null)
+                            nowTouchedrock.Push(transform.position.x, transform.position.z, 2);
+                    }
                     else
-                        nowTouchedrock.Push(transform.position.x, transform.position.z);
+                    {
+                        if (nowTouchedrock != null)
+                            nowTouchedrock.Push(transform.position.x, transform.position.z);
+                    }
                 }
             }
         }
@@ -319,7 +331,8 @@ namespace UnityChan
             anim.SetBool("Pull", value);
             if(value == true && isTouchingRock)
             {
-                nowTouchedrock.Pull(transform.position.x, transform.position.z);
+                if (nowTouchedrock != null)
+                    nowTouchedrock.Pull(transform.position.x, transform.position.z);
             }
         }
 
@@ -349,6 +362,15 @@ namespace UnityChan
             {
                 isTouchingRock = true;
                 nowTouchedrock = collider.GetComponent<Rock>();
+            }
+        }
+
+        void OnTriggerExit(Collider collider)
+        {
+            if (collider.tag == "Rock")
+            {
+                isTouchingRock = false;
+                nowTouchedrock = null;
             }
         }
 
