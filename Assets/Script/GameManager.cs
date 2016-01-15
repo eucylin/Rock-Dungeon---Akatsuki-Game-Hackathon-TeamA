@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour {
 
 	void GameOver(){
 		gamesState = GameState.GameOver;
-		AudioManager.instance.PlaySound(AudioManager.AudioName.GameOver);
+		AudioManager.PlaySound(AudioManager.AudioName.GameOver);
 	}
 
     public void LoadScene(int n)

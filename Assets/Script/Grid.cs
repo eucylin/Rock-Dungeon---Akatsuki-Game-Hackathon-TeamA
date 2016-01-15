@@ -32,7 +32,7 @@ public class Grid : MonoBehaviour {
 			return true;
 		}
 		else{
-			DebugLogger.LogError("Grid : CreateGrid failed! sizeX or sizeY isn't setted well.");
+			DebugLogger.LogError("Grid : CreateGrid failed! sizeX or sizeY isn't set well.");
 			return false;
 		}
 	}
