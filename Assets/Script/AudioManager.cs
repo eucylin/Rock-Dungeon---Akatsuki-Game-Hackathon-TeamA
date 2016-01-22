@@ -4,10 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour {
-    public enum AudioName : int
-    {
-        EnemyHitByRock = 0,
-        GameOver = 1,
+    public enum AudioName : int {
+        EnemyHitByRock,
+        GameOver,
+        Empower1,
+        Explosion1,
+        Explosion2,
+        Explosion3
     }
 
     //instance for conveniently get gameObject in this script

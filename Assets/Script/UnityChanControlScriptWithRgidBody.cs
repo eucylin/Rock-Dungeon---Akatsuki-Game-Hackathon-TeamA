@@ -31,7 +31,7 @@ namespace UnityChan
         public AudioSource beHurt;
 
 
-
+        PlayerEffectHandler effect;
         Rock nowTouchedrock;
 
         public GUIBarScript hpBar;
@@ -39,7 +39,7 @@ namespace UnityChan
         public int hp = 8;
         public bool hpIsLocked = false;
 
-        public float h, v = 0;
+        //public float h, v = 0;
 
 		public float animSpeed = 1.5f;				// アニメーション再生速度設定
 		public float lookSmoother = 3.0f;			// a smoothing setting for camera motion
@@ -92,6 +92,8 @@ namespace UnityChan
 			// CapsuleColliderコンポーネントのHeight、Centerの初期値を保存する
 			orgColHight = col.height;
 			orgVectColCenter = col.center;
+
+            effect = GetComponent<PlayerEffectHandler>();
 		}
 	
 	
@@ -101,42 +103,42 @@ namespace UnityChan
             //Xbox joystick A button
             if (Input.GetKeyDown("joystick button 0"))
             {
-                InitPressedTime();
+                InitEmpower();
             }
             if (Input.GetKey("joystick button 0"))
             {
-                SetEmpower(true);
                 EmpowerPressedTime();
                 
             }
             if (Input.GetKeyUp("joystick button 0"))
             {
-                SetEmpower(false);
+                DoPush();
             }
 
 
             if (Input.GetKey("joystick button 1"))
             {
-                SetPull(true);
+                DoPull();
             }
 
             if (Input.GetKeyUp("joystick button 1"))
             {
-                SetPull(false);
+                StopPull();
             }
-#if UNITY_EDITOR
-            h = Input.GetAxis("Horizontal");                // 入力デバイスの水平軸をhで定義
-            v = Input.GetAxis("Vertical");              // 入力デバイスの垂直軸をvで定義
-#endif
-            anim.SetFloat ("Speed", Mathf.Abs(v) > Mathf.Abs(h) ? Mathf.Abs(v) : Mathf.Abs(h));							// Animator側で設定している"Speed"パラメタにvを渡す
-			//anim.SetFloat ("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
-			anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
-			currentBaseState = anim.GetCurrentAnimatorStateInfo (0);	// 参照用のステート変数にBase Layer (0)の現在のステートを設定する
-			rb.useGravity = true;//ジャンプ中に重力を切るので、それ以外は重力の影響を受けるようにする
+//#if UNITY_EDITOR
+//            h = Input.GetAxis("Horizontal");                // 入力デバイスの水平軸をhで定義
+//            v = Input.GetAxis("Vertical");              // 入力デバイスの垂直軸をvで定義
+//#endif
+		}
+
+        public void MoveControl(float h, float v) {
+            anim.SetFloat("Speed", Mathf.Abs(v) > Mathf.Abs(h) ? Mathf.Abs(v) : Mathf.Abs(h));  // Animator側で設定している"Speed"パラメタにvを渡す
+            anim.speed = animSpeed;                             // Animatorのモーション再生速度に animSpeedを設定する
+            currentBaseState = anim.GetCurrentAnimatorStateInfo(0); // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
+            rb.useGravity = true;//ジャンプ中に重力を切るので、それ以外は重力の影響を受けるようにする
 
 
-            if (currentBaseState.fullPathHash == idleState || currentBaseState.fullPathHash == locoState || currentBaseState.fullPathHash == jumpState || currentBaseState.fullPathHash == walkBackState || currentBaseState.fullPathHash == restState)
-            {
+            if (currentBaseState.fullPathHash == idleState || currentBaseState.fullPathHash == locoState || currentBaseState.fullPathHash == jumpState || currentBaseState.fullPathHash == walkBackState || currentBaseState.fullPathHash == restState) {
 
                 Vector3 moveVectorX = cameraObject.transform.right * h;
                 Vector3 moveVectorY = cameraObject.transform.up * v;
@@ -150,8 +152,8 @@ namespace UnityChan
                 //transform.LookAt(transform.position + new Vector3(h, 0, v));
                 // 以下、キャラクターの移動処理
                 velocity = new Vector3(cubeRotDir.x, 0, cubeRotDir.z) * 0.7f; //new Vector3(h, 0, v);        // 上下のキー入力からZ軸方向の移動量を取得
-                                                        // キャラクターのローカル空間での方向に変換
-                //velocity = transform.TransformDirection(velocity);
+                                                                              // キャラクターのローカル空間での方向に変換
+                                                                              //velocity = transform.TransformDirection(velocity);
 
                 velocity *= forwardSpeed;
 
@@ -165,15 +167,12 @@ namespace UnityChan
                 //    velocity *= backwardSpeed;  // 移動速度を掛ける
                 //}
 
-                if (Input.GetButtonDown("Jump"))
-                {   // スペースキーを入力したら
+                if (Input.GetButtonDown("Jump")) {   // スペースキーを入力したら
 
                     //アニメーションのステートがLocomotionの最中のみジャンプできる
-                    if (currentBaseState.fullPathHash == locoState)
-                    {
+                    if (currentBaseState.fullPathHash == locoState) {
                         //ステート遷移中でなかったらジャンプできる
-                        if (!anim.IsInTransition(0))
-                        {
+                        if (!anim.IsInTransition(0)) {
                             rb.AddForce(Vector3.up * jumpPower, ForceMode.VelocityChange);
                             anim.SetBool("Jump", true);     // Animatorにジャンプに切り替えるフラグを送る
                         }
@@ -189,73 +188,73 @@ namespace UnityChan
                 //transform.Rotate(0, h * rotateSpeed, 0);
 
             }
-			// 以下、Animatorの各ステート中での処理
-			// Locomotion中
-			// 現在のベースレイヤーがlocoStateの時
-			if (currentBaseState.fullPathHash == locoState) {
-				//カーブでコライダ調整をしている時は、念のためにリセットする
-				if (useCurves) {
-					resetCollider ();
-				}
-			}
-		// JUMP中の処理
-		// 現在のベースレイヤーがjumpStateの時
-		else if (currentBaseState.fullPathHash == jumpState) {
-				//cameraObject.SendMessage ("setCameraPositionJumpView");	// ジャンプ中のカメラに変更
-				// ステートがトランジション中でない場合
-				if (!anim.IsInTransition (0)) {
-				
-					// 以下、カーブ調整をする場合の処理
-					if (useCurves) {
-						// 以下JUMP00アニメーションについているカーブJumpHeightとGravityControl
-						// JumpHeight:JUMP00でのジャンプの高さ（0〜1）
-						// GravityControl:1⇒ジャンプ中（重力無効）、0⇒重力有効
-						float jumpHeight = anim.GetFloat ("JumpHeight");
-						float gravityControl = anim.GetFloat ("GravityControl"); 
-						if (gravityControl > 0)
-							rb.useGravity = false;	//ジャンプ中の重力の影響を切る
-										
-						// レイキャストをキャラクターのセンターから落とす
-						Ray ray = new Ray (transform.position + Vector3.up, -Vector3.up);
-						RaycastHit hitInfo = new RaycastHit ();
-						// 高さが useCurvesHeight 以上ある時のみ、コライダーの高さと中心をJUMP00アニメーションについているカーブで調整する
-						if (Physics.Raycast (ray, out hitInfo)) {
-							if (hitInfo.distance > useCurvesHeight) {
-								col.height = orgColHight - jumpHeight;			// 調整されたコライダーの高さ
-								float adjCenterY = orgVectColCenter.y + jumpHeight;
-								col.center = new Vector3 (0, adjCenterY, 0);	// 調整されたコライダーのセンター
-							} else {
-								// 閾値よりも低い時には初期値に戻す（念のため）					
-								resetCollider ();
-							}
-						}
-					}
-					// Jump bool値をリセットする（ループしないようにする）				
-					anim.SetBool ("Jump", false);
-				}
-			}
-		// IDLE中の処理
-		// 現在のベースレイヤーがidleStateの時
-		else if (currentBaseState.fullPathHash == idleState) {
-				//カーブでコライダ調整をしている時は、念のためにリセットする
-				if (useCurves) {
-					resetCollider ();
-				}
-				// スペースキーを入力したらRest状態になる
-				if (Input.GetButtonDown ("Jump")) {
-					anim.SetBool ("Rest", true);
-				}
-			}
-		// REST中の処理
-		// 現在のベースレイヤーがrestStateの時
-		else if (currentBaseState.fullPathHash == restState) {
-				//cameraObject.SendMessage("setCameraPositionFrontView");		// カメラを正面に切り替える
-				// ステートが遷移中でない場合、Rest bool値をリセットする（ループしないようにする）
-				if (!anim.IsInTransition (0)) {
-					anim.SetBool ("Rest", false);
-				}
-			}
-		}
+            // 以下、Animatorの各ステート中での処理
+            // Locomotion中
+            // 現在のベースレイヤーがlocoStateの時
+            if (currentBaseState.fullPathHash == locoState) {
+                //カーブでコライダ調整をしている時は、念のためにリセットする
+                if (useCurves) {
+                    resetCollider();
+                }
+            }
+        // JUMP中の処理
+        // 現在のベースレイヤーがjumpStateの時
+        else if (currentBaseState.fullPathHash == jumpState) {
+                //cameraObject.SendMessage ("setCameraPositionJumpView");	// ジャンプ中のカメラに変更
+                // ステートがトランジション中でない場合
+                if (!anim.IsInTransition(0)) {
+
+                    // 以下、カーブ調整をする場合の処理
+                    if (useCurves) {
+                        // 以下JUMP00アニメーションについているカーブJumpHeightとGravityControl
+                        // JumpHeight:JUMP00でのジャンプの高さ（0〜1）
+                        // GravityControl:1⇒ジャンプ中（重力無効）、0⇒重力有効
+                        float jumpHeight = anim.GetFloat("JumpHeight");
+                        float gravityControl = anim.GetFloat("GravityControl");
+                        if (gravityControl > 0)
+                            rb.useGravity = false;  //ジャンプ中の重力の影響を切る
+
+                        // レイキャストをキャラクターのセンターから落とす
+                        Ray ray = new Ray(transform.position + Vector3.up, -Vector3.up);
+                        RaycastHit hitInfo = new RaycastHit();
+                        // 高さが useCurvesHeight 以上ある時のみ、コライダーの高さと中心をJUMP00アニメーションについているカーブで調整する
+                        if (Physics.Raycast(ray, out hitInfo)) {
+                            if (hitInfo.distance > useCurvesHeight) {
+                                col.height = orgColHight - jumpHeight;          // 調整されたコライダーの高さ
+                                float adjCenterY = orgVectColCenter.y + jumpHeight;
+                                col.center = new Vector3(0, adjCenterY, 0); // 調整されたコライダーのセンター
+                            } else {
+                                // 閾値よりも低い時には初期値に戻す（念のため）					
+                                resetCollider();
+                            }
+                        }
+                    }
+                    // Jump bool値をリセットする（ループしないようにする）				
+                    anim.SetBool("Jump", false);
+                }
+            }
+        // IDLE中の処理
+        // 現在のベースレイヤーがidleStateの時
+        else if (currentBaseState.fullPathHash == idleState) {
+                //カーブでコライダ調整をしている時は、念のためにリセットする
+                if (useCurves) {
+                    resetCollider();
+                }
+                // スペースキーを入力したらRest状態になる
+                if (Input.GetButtonDown("Jump")) {
+                    anim.SetBool("Rest", true);
+                }
+            }
+        // REST中の処理
+        // 現在のベースレイヤーがrestStateの時
+        else if (currentBaseState.fullPathHash == restState) {
+                //cameraObject.SendMessage("setCameraPositionFrontView");		// カメラを正面に切り替える
+                // ステートが遷移中でない場合、Rest bool値をリセットする（ループしないようにする）
+                if (!anim.IsInTransition(0)) {
+                    anim.SetBool("Rest", false);
+                }
+            }
+        }
 
 		//void OnGUI ()
 		//{
@@ -277,63 +276,71 @@ namespace UnityChan
 			col.center = orgVectColCenter;
 		}
 
-        public void SetAxis(Vector2 v2)
-        {
-            h = v2.x;
-            v = v2.y;
-            DebugLogger.Log("("  + v2.x + "," + v2.y + ")");
+        bool flag0, flag1, flag2, flag3, flag4;
+        public float t = 0;
+        public void InitEmpower() {
+            t = 0;
+            flag0 = flag1 = flag2 = flag3 = flag4 = false;
+        }
+        
+        public void EmpowerPressedTime() {
+            t += Time.deltaTime;
+            DebugLogger.Log(t);
+            anim.SetBool("Empower", true);
+            if (t >= 0.5 && t < 1 && flag0 == false) {
+                flag0 = true;
+                effect.PlayEffect(PlayerEffectHandler.EffectName.Empower1, transform.position);
+            }                                                    
+            if (t >= 1 && t < 2 && flag1 == false) {             
+                flag1 = true;                                    
+                effect.PlayEffect(PlayerEffectHandler.EffectName.Explosion1, transform.position);
+                effect.PlayEffect(PlayerEffectHandler.EffectName.Empower2, transform.position);
+                //em2.transform.localScale *= 4;                 
+            } else if (t >= 2 && t < 3 && flag2 == false) {      
+                flag2 = true;                                    
+                effect.PlayEffect(PlayerEffectHandler.EffectName.Explosion2, transform.position);
+                effect.PlayEffect(PlayerEffectHandler.EffectName.Empower3, transform.position);
+            } else if (t >= 3.5f && flag3 == false) {            
+                flag3 = true;                                    
+                effect.PlayEffect(PlayerEffectHandler.EffectName.Explosion3, transform.position);
+            }
         }
 
-        public void ClearAxis()
+        public void DoPush()
         {
-            h = v = 0;
-        }
-        bool flag1, flag2, flag3, flag4;
+            anim.SetBool("Empower", false);
+            effect.PlayEffect(PlayerEffectHandler.EffectName.HitFire, transform.position);
+            if (isTouchingRock) {
+                //play push rock sound
 
-        GameObject b3;
-        public void SetEmpower(bool value)
-        {
-            anim.SetBool("Empower", value);
-            if (value == false)
-            {
-                empowerSound.Stop();
-                Destroy(b3);
-                Instantiate(hitFire, transform.position, Quaternion.identity);
-                if (isTouchingRock)
-                {
-                    pushSound.Play();
-                    if (flag3)
-                    {
-                        if (nowTouchedrock != null)
-                            nowTouchedrock.Push(transform.position.x, transform.position.z, 4);
-                    }
-                    else if (flag2)
-                    {
-                        if (nowTouchedrock != null)
-                            nowTouchedrock.Push(transform.position.x, transform.position.z, 3);
-                    }
-                    else if (flag1)
-                    {
-                        if (nowTouchedrock != null)
-                            nowTouchedrock.Push(transform.position.x, transform.position.z, 2);
-                    }
-                    else
-                    {
-                        if (nowTouchedrock != null)
-                            nowTouchedrock.Push(transform.position.x, transform.position.z);
-                    }
+                if (flag3) {
+                    if (nowTouchedrock != null)
+                        nowTouchedrock.Push(transform.position.x, transform.position.z, 4);
+                } else if (flag2) {
+                    if (nowTouchedrock != null)
+                        nowTouchedrock.Push(transform.position.x, transform.position.z, 3);
+                } else if (flag1) {
+                    if (nowTouchedrock != null)
+                        nowTouchedrock.Push(transform.position.x, transform.position.z, 2);
+                } else {
+                    if (nowTouchedrock != null)
+                        nowTouchedrock.Push(transform.position.x, transform.position.z);
                 }
             }
         }
 
-        public void SetPull(bool value)
+        public void DoPull()
         {
-            anim.SetBool("Pull", value);
-            if(value == true && isTouchingRock)
+            anim.SetBool("Pull", true);
+            if(isTouchingRock)
             {
                 if (nowTouchedrock != null)
                     nowTouchedrock.Pull(transform.position.x, transform.position.z);
             }
+        }
+
+        public void StopPull() {
+            anim.SetBool("Pull", false);
         }
 
         void OnCollisionEnter(Collision collision)
@@ -387,45 +394,6 @@ namespace UnityChan
             hpIsLocked = false;
         }
         
-        public float t = 0;
-        public void InitPressedTime()
-        {
-            t = 0;
-            flag1 = flag2 = flag3 = flag4 = false;
-            GameObject em1 = Instantiate(empower1, transform.position + new Vector3(0, 1f, 0), Quaternion.identity) as GameObject;
-            empowerSound.Play();
-            Destroy(em1, 1);
-        }
-
-        public void EmpowerPressedTime()
-        {
-            t += Time.deltaTime;
-            DebugLogger.Log(t);
-            if (t >= 1 && t < 2 && flag1 == false)
-            {
-                flag1 = true;
-                GameObject b1 = Instantiate(bomb1, transform.position, Quaternion.identity) as GameObject;
-                Destroy(b1, 1);
-                bomb1Sound.Play();
-                GameObject em2 =  Instantiate(empower2, transform.position + new Vector3(0, 1f, 0) +transform.right * 0.1f, Quaternion.identity) as GameObject;
-                em2.transform.localScale *= 4;
-                Destroy(em2, 1);
-            }
-            else if (t >= 2 && t < 3 && flag2 == false)
-            {
-                flag2 = true;
-                GameObject b2 = Instantiate(bomb2, transform.position + new Vector3(0, 1f, 0), Quaternion.identity) as GameObject;
-                Destroy(b2, 1);
-                bomb2Sound.Play();
-                GameObject em3 = Instantiate(empower3, transform.position + new Vector3(0, 1f, 0) + transform.right * 0.1f, Quaternion.identity) as GameObject;
-                Destroy(em3, 2.5f);
-            }
-            else if (t >= 3.5f && flag3 == false)
-            {
-                flag3 = true;
-                b3 = Instantiate(bomb3, transform.position + new Vector3(0, 0.7f, 0), Quaternion.identity) as GameObject;
-                bomb3Sound.Play();
-            }
-        }
+        
     }
 }
