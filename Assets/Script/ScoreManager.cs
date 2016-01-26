@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour {
 
 	void GameSucceed(){
 		currentTimeRecord = Mathf.RoundToInt(Time.timeSinceLevelLoad);
-		DebugLogger.Log("CurrentTimeRecord : " + TimeToString(currentTimeRecord));
+		Debugger.Log("CurrentTimeRecord : " + TimeToString(currentTimeRecord));
 
 		highestTimeRecord = PlayerPrefs.GetInt("Level" + Application.loadedLevel + "TimeRecord", 1000000);
 
@@ -34,7 +34,7 @@ public class ScoreManager : MonoBehaviour {
 			highestTimeRecord = currentTimeRecord;
 			PlayerPrefs.SetInt("Level" + Application.loadedLevel + "TimeRecord", Mathf.RoundToInt(highestTimeRecord));
 		}
-		DebugLogger.Log("Level" + Application.loadedLevel + "TimeRecord : " + TimeToString(highestTimeRecord));
+		Debugger.Log("Level" + Application.loadedLevel + "TimeRecord : " + TimeToString(highestTimeRecord));
 	}
 
 	string TimeToString(float time){

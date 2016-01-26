@@ -28,11 +28,11 @@ public class Grid : MonoBehaviour {
 					nodes[i, j].indexZ = j;
 				}
 			}
-			DebugLogger.Log("Grid : A " + sizeX + "x" + sizeZ + " grid is created.");
+			Debugger.Log("Grid : A " + sizeX + "x" + sizeZ + " grid is created.");
 			return true;
 		}
 		else{
-			DebugLogger.LogError("Grid : CreateGrid failed! sizeX or sizeY isn't set well.");
+			Debugger.LogError("Grid : CreateGrid failed! sizeX or sizeY isn't set well.");
 			return false;
 		}
 	}

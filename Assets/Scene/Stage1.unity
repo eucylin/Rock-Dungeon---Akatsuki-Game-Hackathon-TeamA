@@ -1364,6 +1364,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11494812, guid: 62abb9e9157666d40a0b8a8fa37f0d5c, type: 2}
+      propertyPath: audioClips.Array.size
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 435128, guid: 62abb9e9157666d40a0b8a8fa37f0d5c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1396,6 +1400,30 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 11494812, guid: 62abb9e9157666d40a0b8a8fa37f0d5c, type: 2}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 28eeab58eff6ac645886891925a165c8, type: 3}
+    - target: {fileID: 11494812, guid: 62abb9e9157666d40a0b8a8fa37f0d5c, type: 2}
+      propertyPath: audioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: a0b0223b191ceee4081871c8269da9be, type: 3}
+    - target: {fileID: 11494812, guid: 62abb9e9157666d40a0b8a8fa37f0d5c, type: 2}
+      propertyPath: audioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8cefa525b47bb2b428fbb0204193ed6b, type: 3}
+    - target: {fileID: 11494812, guid: 62abb9e9157666d40a0b8a8fa37f0d5c, type: 2}
+      propertyPath: audioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: e9223a0422a374941be257362852b5b0, type: 3}
+    - target: {fileID: 11494812, guid: 62abb9e9157666d40a0b8a8fa37f0d5c, type: 2}
+      propertyPath: audioClips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 005c2ddada6257643b0e78951df284b6, type: 3}
+    - target: {fileID: 11494812, guid: 62abb9e9157666d40a0b8a8fa37f0d5c, type: 2}
+      propertyPath: audioClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: c49d458dc7d66214bb25498cc79d189d, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62abb9e9157666d40a0b8a8fa37f0d5c, type: 2}
   m_IsPrefabParent: 0

@@ -11,7 +11,7 @@ public class PlayerInput : MonoBehaviour {
     }
 
     protected void Empowering() {
-        player.EmpowerPressedTime();
+        player.Empowering();
     }
 
     protected void Push() {

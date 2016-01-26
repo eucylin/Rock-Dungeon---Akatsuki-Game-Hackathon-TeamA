@@ -77,7 +77,7 @@ public class Rock : MonoBehaviour {
 			forceCoef = force;
 			isPushing = true;
 		}
-		DebugLogger.Log("Pushing rock! " + "px = " + pX + ", pz = " + pZ + ", targetX = " + targetX + ", targetZ = " + targetZ);
+		Debugger.Log("Pushing rock! " + "px = " + pX + ", pz = " + pZ + ", targetX = " + targetX + ", targetZ = " + targetZ);
 	}
 
 	public void Pull(float playerX, float playerZ){
@@ -147,7 +147,7 @@ public class Rock : MonoBehaviour {
 			forceCoef = force;
 			isPulling = true;
 		}
-		DebugLogger.Log("Pulling rock! " + "px = " + pX + ", pz = " + pZ + ", targetX = " + targetX + ", targetZ = " + targetZ);
+		Debugger.Log("Pulling rock! " + "px = " + pX + ", pz = " + pZ + ", targetX = " + targetX + ", targetZ = " + targetZ);
 
 	}
 

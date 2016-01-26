@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour {
     private static AudioManager instance;
 
     public static AudioMixerGroup audioGroup;
-    public static AudioClip[] audioClips;
+    public AudioClip[] audioClips;
     public static List<AudioSource> pooledSources;
     public static int pooledAmount = 10;
     public static float lowPitchRange = 0.95f, highPitchRange = 1.05f;
@@ -50,8 +50,8 @@ public class AudioManager : MonoBehaviour {
 
     public static void PlaySound(params AudioName[] name) {
         foreach (AudioName clipName in name) {
-            if (audioClips[(int)clipName]) {
-                instance.GetAudioSoucre().PlayOneShot(audioClips[(int)clipName]);
+            if (instance.audioClips[(int)clipName]) {
+                instance.GetAudioSoucre().PlayOneShot(instance.audioClips[(int)clipName]);
             } else {
                 print("AudioManager : AudioClip[" + name.ToString() + "] has not been set");
             }
@@ -62,15 +62,22 @@ public class AudioManager : MonoBehaviour {
         float randomPitch = Random.Range(lowPitchRange, highPitchRange);
 
         foreach (AudioName clipName in name) {
-            if (audioClips[(int)clipName]) {
+            if (instance.audioClips[(int)clipName]) {
                 AudioSource source = instance.GetAudioSoucre();
 
                 source.pitch = randomPitch;
-                source.PlayOneShot(audioClips[(int)clipName]);
+                source.PlayOneShot(instance.audioClips[(int)clipName]);
             } else {
                 print("AudioManager : AudioClip[" + name.ToString() + "] has not been set");
             }
         }
+    }
+
+    public static bool HaveAudio(string s) {
+        if (System.Enum.IsDefined(typeof(AudioName), s))
+            return true;
+        else
+            return false;
     }
 
     private AudioSource GetAudioSoucre()

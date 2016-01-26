@@ -6,15 +6,13 @@
 using UnityEngine;
 using System.Collections;
 
-namespace UnityChan
-{
-// 必要なコンポーネントの列記
-	[RequireComponent(typeof(Animator))]
-	[RequireComponent(typeof(CapsuleCollider))]
-	[RequireComponent(typeof(Rigidbody))]
+namespace UnityChan {
+    // 必要なコンポーネントの列記
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(CapsuleCollider))]
+    [RequireComponent(typeof(Rigidbody))]
 
-	public class UnityChanControlScriptWithRgidBody : MonoBehaviour
-	{
+    public class UnityChanControlScriptWithRgidBody : MonoBehaviour {
         public GameObject empower1;
         public GameObject bomb1;
         public GameObject empower2;
@@ -41,95 +39,88 @@ namespace UnityChan
 
         //public float h, v = 0;
 
-		public float animSpeed = 1.5f;				// アニメーション再生速度設定
-		public float lookSmoother = 3.0f;			// a smoothing setting for camera motion
-		public bool useCurves = true;				// Mecanimでカーブ調整を使うか設定する
-		// このスイッチが入っていないとカーブは使われない
-		public float useCurvesHeight = 0.5f;		// カーブ補正の有効高さ（地面をすり抜けやすい時には大きくする）
+        public float animSpeed = 1.5f;              // アニメーション再生速度設定
+        public float lookSmoother = 3.0f;           // a smoothing setting for camera motion
+        public bool useCurves = true;               // Mecanimでカーブ調整を使うか設定する
+                                                    // このスイッチが入っていないとカーブは使われない
+        public float useCurvesHeight = 0.5f;        // カーブ補正の有効高さ（地面をすり抜けやすい時には大きくする）
 
-		// 以下キャラクターコントローラ用パラメタ
-		// 前進速度
-		public float forwardSpeed = 2.0f;
-		// 後退速度
-		public float backwardSpeed = 2.0f;
-		// 旋回速度
-		public float rotateSpeed = 2.0f;
-		// ジャンプ威力
-		public float jumpPower = 3.0f; 
-		// キャラクターコントローラ（カプセルコライダ）の参照
-		private CapsuleCollider col;
-		private Rigidbody rb;
-		// キャラクターコントローラ（カプセルコライダ）の移動量
-		private Vector3 velocity;
-		// CapsuleColliderで設定されているコライダのHeiht、Centerの初期値を収める変数
-		private float orgColHight;
-		private Vector3 orgVectColCenter;
-		private Animator anim;							// キャラにアタッチされるアニメーターへの参照
-		private AnimatorStateInfo currentBaseState;			// base layerで使われる、アニメーターの現在の状態の参照
+        // 以下キャラクターコントローラ用パラメタ
+        // 前進速度
+        public float forwardSpeed = 2.0f;
+        // 後退速度
+        public float backwardSpeed = 2.0f;
+        // 旋回速度
+        public float rotateSpeed = 2.0f;
+        // ジャンプ威力
+        public float jumpPower = 3.0f;
+        // キャラクターコントローラ（カプセルコライダ）の参照
+        private CapsuleCollider col;
+        private Rigidbody rb;
+        // キャラクターコントローラ（カプセルコライダ）の移動量
+        private Vector3 velocity;
+        // CapsuleColliderで設定されているコライダのHeiht、Centerの初期値を収める変数
+        private float orgColHight;
+        private Vector3 orgVectColCenter;
+        private Animator anim;                          // キャラにアタッチされるアニメーターへの参照
+        private AnimatorStateInfo currentBaseState;         // base layerで使われる、アニメーターの現在の状態の参照
 
-		private GameObject cameraObject;	// メインカメラへの参照
-		
-		// アニメーター各ステートへの参照
-		static int idleState = Animator.StringToHash ("Base Layer.Idle");
-		static int locoState = Animator.StringToHash ("Base Layer.Locomotion");
-		static int jumpState = Animator.StringToHash ("Base Layer.Jump");
-		static int restState = Animator.StringToHash ("Base Layer.Rest");
+        private GameObject cameraObject;    // メインカメラへの参照
+
+        // アニメーター各ステートへの参照
+        static int idleState = Animator.StringToHash("Base Layer.Idle");
+        static int locoState = Animator.StringToHash("Base Layer.Locomotion");
+        static int jumpState = Animator.StringToHash("Base Layer.Jump");
+        static int restState = Animator.StringToHash("Base Layer.Rest");
         static int walkBackState = Animator.StringToHash("Base Layer.WalkBack");
         static int empowerState = Animator.StringToHash("Base Layer.Empower");
         static int attackState = Animator.StringToHash("Base Layer.Attack");
         static int damagedState = Animator.StringToHash("Base Layer.Damaged");
 
         // 初期化
-        void Start ()
-		{
-			// Animatorコンポーネントを取得する
-			anim = GetComponent<Animator> ();
-			// CapsuleColliderコンポーネントを取得する（カプセル型コリジョン）
-			col = GetComponent<CapsuleCollider> ();
-			rb = GetComponent<Rigidbody> ();
-			//メインカメラを取得する
-			cameraObject = GameObject.FindWithTag ("MainCamera");
-			// CapsuleColliderコンポーネントのHeight、Centerの初期値を保存する
-			orgColHight = col.height;
-			orgVectColCenter = col.center;
+        void Start() {
+            // Animatorコンポーネントを取得する
+            anim = GetComponent<Animator>();
+            // CapsuleColliderコンポーネントを取得する（カプセル型コリジョン）
+            col = GetComponent<CapsuleCollider>();
+            rb = GetComponent<Rigidbody>();
+            //メインカメラを取得する
+            cameraObject = GameObject.FindWithTag("MainCamera");
+            // CapsuleColliderコンポーネントのHeight、Centerの初期値を保存する
+            orgColHight = col.height;
+            orgVectColCenter = col.center;
 
             effect = GetComponent<PlayerEffectHandler>();
-		}
-	
-	
-		// 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
-		void FixedUpdate ()
-		{
+        }
+
+
+        // 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
+        void FixedUpdate() {
             //Xbox joystick A button
-            if (Input.GetKeyDown("joystick button 0"))
-            {
+            if (Input.GetKeyDown("joystick button 0")) {
                 InitEmpower();
             }
-            if (Input.GetKey("joystick button 0"))
-            {
-                EmpowerPressedTime();
-                
+            if (Input.GetKey("joystick button 0")) {
+                Empowering();
+
             }
-            if (Input.GetKeyUp("joystick button 0"))
-            {
+            if (Input.GetKeyUp("joystick button 0")) {
                 DoPush();
             }
 
 
-            if (Input.GetKey("joystick button 1"))
-            {
+            if (Input.GetKey("joystick button 1")) {
                 DoPull();
             }
 
-            if (Input.GetKeyUp("joystick button 1"))
-            {
+            if (Input.GetKeyUp("joystick button 1")) {
                 StopPull();
             }
-//#if UNITY_EDITOR
-//            h = Input.GetAxis("Horizontal");                // 入力デバイスの水平軸をhで定義
-//            v = Input.GetAxis("Vertical");              // 入力デバイスの垂直軸をvで定義
-//#endif
-		}
+            //#if UNITY_EDITOR
+            //            h = Input.GetAxis("Horizontal");                // 入力デバイスの水平軸をhで定義
+            //            v = Input.GetAxis("Vertical");              // 入力デバイスの垂直軸をvで定義
+            //#endif
+        }
 
         public void MoveControl(float h, float v) {
             anim.SetFloat("Speed", Mathf.Abs(v) > Mathf.Abs(h) ? Mathf.Abs(v) : Mathf.Abs(h));  // Animator側で設定している"Speed"パラメタにvを渡す
@@ -256,25 +247,24 @@ namespace UnityChan
             }
         }
 
-		//void OnGUI ()
-		//{
-		//	GUI.Box (new Rect (Screen.width - 260, 10, 250, 150), "Interaction");
-		//	GUI.Label (new Rect (Screen.width - 245, 30, 250, 30), "Up/Down Arrow : Go Forwald/Go Back");
-		//	GUI.Label (new Rect (Screen.width - 245, 50, 250, 30), "Left/Right Arrow : Turn Left/Turn Right");
-		//	GUI.Label (new Rect (Screen.width - 245, 70, 250, 30), "Hit Space key while Running : Jump");
-		//	GUI.Label (new Rect (Screen.width - 245, 90, 250, 30), "Hit Spase key while Stopping : Rest");
-		//	GUI.Label (new Rect (Screen.width - 245, 110, 250, 30), "Left Control : Front Camera");
-		//	GUI.Label (new Rect (Screen.width - 245, 130, 250, 30), "Alt : LookAt Camera");
-		//}
+        //void OnGUI ()
+        //{
+        //	GUI.Box (new Rect (Screen.width - 260, 10, 250, 150), "Interaction");
+        //	GUI.Label (new Rect (Screen.width - 245, 30, 250, 30), "Up/Down Arrow : Go Forwald/Go Back");
+        //	GUI.Label (new Rect (Screen.width - 245, 50, 250, 30), "Left/Right Arrow : Turn Left/Turn Right");
+        //	GUI.Label (new Rect (Screen.width - 245, 70, 250, 30), "Hit Space key while Running : Jump");
+        //	GUI.Label (new Rect (Screen.width - 245, 90, 250, 30), "Hit Spase key while Stopping : Rest");
+        //	GUI.Label (new Rect (Screen.width - 245, 110, 250, 30), "Left Control : Front Camera");
+        //	GUI.Label (new Rect (Screen.width - 245, 130, 250, 30), "Alt : LookAt Camera");
+        //}
 
 
-		// キャラクターのコライダーサイズのリセット関数
-		void resetCollider ()
-		{
-			// コンポーネントのHeight、Centerの初期値を戻す
-			col.height = orgColHight;
-			col.center = orgVectColCenter;
-		}
+        // キャラクターのコライダーサイズのリセット関数
+        void resetCollider() {
+            // コンポーネントのHeight、Centerの初期値を戻す
+            col.height = orgColHight;
+            col.center = orgVectColCenter;
+        }
 
         bool flag0, flag1, flag2, flag3, flag4;
         public float t = 0;
@@ -282,33 +272,34 @@ namespace UnityChan
             t = 0;
             flag0 = flag1 = flag2 = flag3 = flag4 = false;
         }
-        
-        public void EmpowerPressedTime() {
+
+        public void Empowering() {
             t += Time.deltaTime;
-            DebugLogger.Log(t);
+            Debugger.Log(t);
             anim.SetBool("Empower", true);
             if (t >= 0.5 && t < 1 && flag0 == false) {
                 flag0 = true;
-                effect.PlayEffect(PlayerEffectHandler.EffectName.Empower1, transform.position);
-            }                                                    
-            if (t >= 1 && t < 2 && flag1 == false) {             
-                flag1 = true;                                    
+                Debugger.Log("before playing empower1");
+                effect.PlayEffect(PlayerEffectHandler.EffectName.Empower1, transform.position, 0.5f);
+            }
+            if (t >= 1 && t < 2 && flag1 == false) {
+                flag1 = true;
                 effect.PlayEffect(PlayerEffectHandler.EffectName.Explosion1, transform.position);
                 effect.PlayEffect(PlayerEffectHandler.EffectName.Empower2, transform.position);
                 //em2.transform.localScale *= 4;                 
-            } else if (t >= 2 && t < 3 && flag2 == false) {      
-                flag2 = true;                                    
+            } else if (t >= 2 && t < 3 && flag2 == false) {
+                flag2 = true;
                 effect.PlayEffect(PlayerEffectHandler.EffectName.Explosion2, transform.position);
                 effect.PlayEffect(PlayerEffectHandler.EffectName.Empower3, transform.position);
-            } else if (t >= 3.5f && flag3 == false) {            
-                flag3 = true;                                    
-                effect.PlayEffect(PlayerEffectHandler.EffectName.Explosion3, transform.position);
+            } else if (t >= 3f && flag3 == false) {
+                flag3 = true;
+                effect.PlayEffect(PlayerEffectHandler.EffectName.Explosion3, transform.position, 10f);
             }
         }
 
-        public void DoPush()
-        {
+        public void DoPush() {
             anim.SetBool("Empower", false);
+            effect.DestroyLastEffect();
             effect.PlayEffect(PlayerEffectHandler.EffectName.HitFire, transform.position);
             if (isTouchingRock) {
                 //play push rock sound
@@ -329,11 +320,9 @@ namespace UnityChan
             }
         }
 
-        public void DoPull()
-        {
+        public void DoPull() {
             anim.SetBool("Pull", true);
-            if(isTouchingRock)
-            {
+            if (isTouchingRock) {
                 if (nowTouchedrock != null)
                     nowTouchedrock.Pull(transform.position.x, transform.position.z);
             }
@@ -343,17 +332,14 @@ namespace UnityChan
             anim.SetBool("Pull", false);
         }
 
-        void OnCollisionEnter(Collision collision)
-        {
-            if (collision.transform.tag == "Enemy" && !hpIsLocked)
-            {
+        void OnCollisionEnter(Collision collision) {
+            if (collision.transform.tag == "Enemy" && !hpIsLocked) {
                 anim.SetTrigger("Damage");
                 beHurt.Play();
                 hp -= 1;
                 hpBar.Value = (float)hp / maxHP;
                 StartCoroutine(SetPlayerToUnTouchable());
-                if(hp <= 0 )
-                {
+                if (hp <= 0) {
                     col.enabled = false;
                     anim.SetTrigger("Dead");
                     EventManager.GameOver();
@@ -363,37 +349,31 @@ namespace UnityChan
         }
 
         bool isTouchingRock = false;
-        void OnTriggerStay(Collider collider)
-        {
-            if(collider.tag == "Rock")
-            {
+        void OnTriggerStay(Collider collider) {
+            if (collider.tag == "Rock") {
                 isTouchingRock = true;
                 nowTouchedrock = collider.GetComponent<Rock>();
             }
         }
 
-        void OnTriggerExit(Collider collider)
-        {
-            if (collider.tag == "Rock")
-            {
+        void OnTriggerExit(Collider collider) {
+            if (collider.tag == "Rock") {
                 isTouchingRock = false;
                 nowTouchedrock = null;
             }
         }
 
-        IEnumerator ReloadLevelDelay(float waitTime)
-        {
+        IEnumerator ReloadLevelDelay(float waitTime) {
             yield return new WaitForSeconds(waitTime);
             Application.LoadLevel(0);
         }
 
-        IEnumerator SetPlayerToUnTouchable()
-        {
+        IEnumerator SetPlayerToUnTouchable() {
             hpIsLocked = true;
             yield return new WaitForSeconds(1.5f);
             hpIsLocked = false;
         }
-        
-        
+
+
     }
 }

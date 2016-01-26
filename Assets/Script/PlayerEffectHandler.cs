@@ -27,14 +27,26 @@ public class PlayerEffectHandler : MonoBehaviour {
 
     public GameObject[] effectPrefabArray;
     UnityChan.UnityChanControlScriptWithRgidBody player;
+    GameObject lastPlayEffect;
 
     void Start() {
         player = GetComponent<UnityChan.UnityChanControlScriptWithRgidBody>();
     }
 
-    public void PlayEffect(EffectName effectName, Vector3 pos) {
+    public void PlayEffect(EffectName effectName, Vector3 pos, float lifetime = 1f) {
         GameObject clone = (GameObject)Instantiate(effectPrefabArray[(int)effectName], pos + adjust[effectName], Quaternion.identity);
-        Destroy(clone, 1);
-        AudioManager.PlaySound((AudioManager.AudioName)effectName); //[]
+        lastPlayEffect = clone;
+        Destroy(clone, lifetime);
+        Debugger.Log(effectName.ToString());
+
+        //Play effect's sound
+        if (AudioManager.HaveAudio(effectName.ToString())) {
+            AudioManager.AudioName effectAudio = (AudioManager.AudioName)System.Enum.Parse(typeof(AudioManager.AudioName), effectName.ToString());
+            AudioManager.PlaySound(effectAudio);
+        }
+    }
+
+    public void DestroyLastEffect() {
+        Destroy(lastPlayEffect);
     }
 }
