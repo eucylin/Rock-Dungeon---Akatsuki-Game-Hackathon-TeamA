@@ -14,7 +14,7 @@ public class PlayerEffectHandler : MonoBehaviour {
         HitFire = 6
     }
 
-    //不是每個特效都好生成在我們想要的位置上， 我們需要根據腳色現在的位置再做些微調
+    //不是每個特效都剛好生成在我們想要的位置上， 我們需要根據腳色現在的位置再做些微調
     public Dictionary<EffectName, Vector3> adjust = new Dictionary<EffectName, Vector3>(){
         {EffectName.Empower1 , new Vector3(0, 1, 0)},
         {EffectName.Explosion1 , new Vector3(0, 0, 0)},
